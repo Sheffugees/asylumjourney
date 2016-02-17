@@ -2,6 +2,9 @@
 
 Symfony API and admin backend for the Asylum Journey project.
 
+## API Documentation
+
+API documentation can be found at http://docs.asylumjourney.apiary.io/#
 
 ## Getting Started
 
