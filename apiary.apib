@@ -1,0 +1,108 @@
+FORMAT: 1A
+
+# Asylum Journey
+
+# Group Home
+
+## Home [/]
+
+The home page.
+
++ Model
+
+        {
+            "_links": {
+                "self": { "href": "/" },
+                "services": { "href": "/services" }
+            }
+        }
+
+### Read homepage [GET]
++ Response 200 (application/hal+json)
+
+    [Home][]
+
+# Group Services
+
+## Service [/services/{guid}]
+
++ Parameters
+    + guid (required, string, `aa88cb4b-247a-41e2-9616-7cc8796245d6`) ... Alphanumeric `guid` of the Service to perform action with. Has example value.
+
++ Model
+
+        {
+            "_links": {
+                "self": { "href": "/services/aa88cb4b-247a-41e2-9616-7cc8796245d6" }
+            },
+            "id": "aa88cb4b-247a-41e2-9616-7cc8796245d6",
+            "name": "My Service",
+            "contact": "me",
+            "coverage": "Everywhere",
+            "description": "This is a service",
+            "expiry":"2011-01-01T00:00:00+0000",
+            "launch":"2011-01-01T00:00:00+0000",
+            "postcode":"s1 2ns",
+            "provider":"Someone"
+        }
+
+### Read a Service [GET]
++ Response 200 (application/hal+json)
+
+    [Service][]
+    
++ Response 404 (application/vnd.error+json)
+
+        {
+            "_links": {
+                "about": { "href": "/services/aa88cb4b-247a-41e2-9616-7cc8796245d6" }
+            },
+            "message": "Service not found"
+        }
+        
+## Services Collection [/services]
+
+### List All Services [GET]
+
++ Response 200 (application/hal+json)
+    + Body
+    
+            {
+                "_links": {
+                    "self": { "href": "/services" }
+                },
+                "_embedded": {
+                    "services": [
+                        {
+                            "_links": {
+                                "self": { "href": "/services/aa88cb4b-247a-41e2-9616-7cc8796245d6" }
+                            },
+                            "id": "aa88cb4b-247a-41e2-9616-7cc8796245d6",
+                            "name": "My Service",
+                            "contact": "me",
+                            "coverage": "Everywhere",
+                            "description": "This is a service",
+                            "expiry":"2011-01-01T00:00:00+0000",
+                            "launch":"2011-01-01T00:00:00+0000",
+                            "postcode":"s1 2ns",
+                            "provider":"Someone"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/services/b072d19b-e2ef-46ee-b46f-88f4c0aa6ccf" }
+                            },
+                            "id": "b072d19b-e2ef-46ee-b46f-88f4c0aa6ccf",
+                            "name": "Another Service",
+                            "contact": "Me",
+                            "coverage": "Some places",
+                            "description": "The description",
+                            "expiry":"2014-01-01T00:00:00+0000",
+                            "launch":"2011-01-01T00:00:00+0000",
+                            "postcode":"s11 7rd",
+                            "provider":"Me"
+                        }
+                    ]
+                },
+                "total": 2
+            }
+        

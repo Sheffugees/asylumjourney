@@ -2,35 +2,76 @@
 
 namespace AppBundle\Controller;
 
+use Nocarrier\Hal;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class DefaultController extends Controller
 {
+
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="home")
      */
     public function indexAction()
     {
-        $normalizer = new GetSetMethodNormalizer();
+        return $this->halResponse((new Hal('/'))->addLink('services', '/services'));
+    }
 
+    /**
+     * @Route("/services", name="list_services")
+     */
+    public function listServicesAction()
+    {
+        $normalizer = $this->normalizer();
+        $services = $this->getDoctrine()->getRepository("AppBundle:Service")->findAll();
+
+        $hal = new Hal('/services', ['total' => count($services)]);
+
+        foreach ($services as $service) {
+            $hal->addResource(
+                'services',
+                (new Hal('/services/' . $service->getId()))->setData($normalizer->normalize($service))
+            );
+        }
+
+        return $this->halResponse($hal);
+    }
+
+    /**
+     * @Route("/services/{id}", name="read_service")
+     */
+    public function readServiceAction($id)
+    {
+        $service = $this->getDoctrine()->getRepository("AppBundle:Service")->find($id);
+
+        if (!$service) {
+            return new Response((new Hal(null, ['message' => 'Service not found']))->addLink(
+                'about',
+                '/services/' . $id
+            )->asJson(true), 404, ['Content-Type' => 'application/vnd.error+json']);
+        }
+
+        return $this->halResponse(
+            (new Hal('/services/' . $service->getId()))
+                ->setData($this->normalizer()->normalize($service))
+        );
+    }
+
+    private function normalizer()
+    {
         $callback = function ($dateTime) {
             return $dateTime instanceof \DateTime
                 ? $dateTime->format(\DateTime::ISO8601)
                 : '';
         };
 
-        $normalizer->setCallbacks(['launch' => $callback, 'expiry' => $callback]);
+        return (new GetSetMethodNormalizer())->setCallbacks(['launch' => $callback, 'expiry' => $callback]);
+    }
 
-        $serializer = new Serializer([$normalizer], [new JsonEncoder()]);
-
-        return new Response($serializer->serialize(
-            $this->getDoctrine()->getRepository("AppBundle:Service")->findAll(),
-            "json"
-        ), 200, ["Content-Type: application/json"]);
+    private function halResponse(Hal $resource)
+    {
+        return new Response($resource->asJson(true), 200, ['Content-Type' => 'application/hal+json']);
     }
 }

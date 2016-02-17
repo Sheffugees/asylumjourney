@@ -1,0 +1,21 @@
+{
+  "name": "asylumjourney",
+  "version": "1.0.0",
+  "description": "Symfony API and admin backend for the Asylum Journey project.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sheffugees/asylumjourney.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sheffugees/asylumjourney/issues"
+  },
+  "homepage": "https://github.com/Sheffugees/asylumjourney#readme",
+  "devDependencies": {
+    "dredd": "^1.0.4",
+    "node-gyp": "^3.3.0"
+  }
+}
