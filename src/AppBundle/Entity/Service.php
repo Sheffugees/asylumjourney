@@ -77,6 +77,18 @@ class Service
      */
     private $postcode;
 
+    function __construct($contact, $coverage, $description, $expiry, $launch, $name, $postcode, $provider)
+    {
+        $this->contact = $contact;
+        $this->coverage = $coverage;
+        $this->description = $description;
+        $this->expiry = $expiry;
+        $this->launch = $launch;
+        $this->name = $name;
+        $this->postcode = $postcode;
+        $this->provider = $provider;
+    }
+
     /**
      * Get id
      *
@@ -100,6 +112,8 @@ class Service
 
         return $this;
     }
+
+
 
     /**
      * Get name

@@ -24,18 +24,18 @@ The home page.
 
 # Group Services
 
-## Service [/services/{guid}]
+## Service [/services/{id}]
 
 + Parameters
-    + guid (required, string, `aa88cb4b-247a-41e2-9616-7cc8796245d6`) ... Alphanumeric `guid` of the Service to perform action with. Has example value.
+    + id (required, string, `1`) ... numeric `id` of the Service to perform action with. Has example value.
 
 + Model
 
         {
             "_links": {
-                "self": { "href": "/services/aa88cb4b-247a-41e2-9616-7cc8796245d6" }
+                "self": { "href": "/services/1" }
             },
-            "id": "aa88cb4b-247a-41e2-9616-7cc8796245d6",
+            "id": "1",
             "name": "My Service",
             "contact": "me",
             "coverage": "Everywhere",
@@ -55,7 +55,7 @@ The home page.
 
         {
             "_links": {
-                "about": { "href": "/services/aa88cb4b-247a-41e2-9616-7cc8796245d6" }
+                "about": { "href": "/services/9" }
             },
             "message": "Service not found"
         }
@@ -75,9 +75,9 @@ The home page.
                     "services": [
                         {
                             "_links": {
-                                "self": { "href": "/services/aa88cb4b-247a-41e2-9616-7cc8796245d6" }
+                                "self": { "href": "/services/1" }
                             },
-                            "id": "aa88cb4b-247a-41e2-9616-7cc8796245d6",
+                            "id": "1",
                             "name": "My Service",
                             "contact": "me",
                             "coverage": "Everywhere",
@@ -89,9 +89,9 @@ The home page.
                         },
                         {
                             "_links": {
-                                "self": { "href": "/services/b072d19b-e2ef-46ee-b46f-88f4c0aa6ccf" }
+                                "self": { "href": "/services/2" }
                             },
-                            "id": "b072d19b-e2ef-46ee-b46f-88f4c0aa6ccf",
+                            "id": "2",
                             "name": "Another Service",
                             "contact": "Me",
                             "coverage": "Some places",
