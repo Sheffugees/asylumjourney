@@ -9,6 +9,32 @@ services:
         arguments: [~, AppBundle\Entity\Service, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Service, group: "Journey" }
+    admin.provider:
+        class: AppBundle\Admin\ProviderAdmin
+        arguments: [~, AppBundle\Entity\Provider, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Provider, group: "Journey" }
+
+    admin.stage:
+        class: AppBundle\Admin\StageAdmin
+        arguments: [~, AppBundle\Entity\Stage, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Stage, group: "Journey" }
+    admin.category:
+        class: AppBundle\Admin\CategoryAdmin
+        arguments: [~, AppBundle\Entity\Category, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Category, group: "Journey" }
+    admin.issue:
+        class: AppBundle\Admin\IssueAdmin
+        arguments: [~, AppBundle\Entity\Issue, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Gap or Issue", group: "Journey" }
+    admin.service_user:
+        class: AppBundle\Admin\ServiceUserAdmin
+        arguments: [~, AppBundle\Entity\ServiceUser, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: "Service User", group: "Journey" }
 
     sonata.user.admin.group:
         abstract: true

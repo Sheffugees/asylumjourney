@@ -2,19 +2,16 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Service
- *
  * @ORM\Table(name="service")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\ServiceRepository")
+ * @ORM\Entity
  */
 class Service
 {
     /**
-     * @var int
-     *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -22,127 +19,62 @@ class Service
     private $id;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
-     * @var string
-     *
      * @ORM\Column(name="description", type="text")
      */
     private $description;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="provider", type="string", length=255)
+     * @ORM\Column(name="maintainer", type="string", length=255)
      */
-    private $provider;
+    private $dataMaintainer;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="contact", type="text")
+     * @ORM\Column(name="endDate", type="date")
      */
-    private $contact;
+    private $endDate;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="coverage", type="text")
+     * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Stage")
      */
-    private $coverage;
+    private $stages;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="launch", type="date")
+     * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Category")
      */
-    private $launch;
+    private $categories;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="expiry", type="date")
+     * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\ServiceUser")
      */
-    private $expiry;
+    private $serviceUsers;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="postcode", type="string", length=20)
+     * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Issue")
      */
-    private $postcode;
+    private $issues;
 
-    function __construct($contact, $coverage, $description, $expiry, $launch, $name, $postcode, $provider)
+    function __construct($dataMaintainer, $description, $endDate, $name)
     {
-        $this->contact = $contact;
-        $this->coverage = $coverage;
+        $this->dataMaintainer = $dataMaintainer;
         $this->description = $description;
-        $this->expiry = $expiry;
-        $this->launch = $launch;
+        $this->endDate = $endDate;
         $this->name = $name;
-        $this->postcode = $postcode;
-        $this->provider = $provider;
+        $this->stages = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
+    public function setDataMaintainer($dataMaintainer)
     {
-        return $this->id;
+        $this->dataMaintainer = $dataMaintainer;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Service
-     */
-    public function setName($name)
+    public function getDataMaintainer()
     {
-        $this->name = $name;
-
-        return $this;
-    }
-
-
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setContact($contact)
-    {
-        $this->contact = $contact;
-    }
-
-    public function getContact()
-    {
-        return $this->contact;
-    }
-
-    public function setCoverage($coverage)
-    {
-        $this->coverage = $coverage;
-    }
-
-    public function getCoverage()
-    {
-        return $this->coverage;
+        return $this->dataMaintainer;
     }
 
     public function setDescription($description)
@@ -155,44 +87,114 @@ class Service
         return $this->description;
     }
 
-    public function setExpiry($expiry)
+    public function setEndDate($endDate)
     {
-        $this->expiry = $expiry;
+        $this->endDate = $endDate;
     }
 
-    public function getExpiry()
+    public function getEndDate()
     {
-        return $this->expiry;
+        return $this->endDate;
     }
 
-    public function setLaunch($launch)
+    public function getId()
     {
-        $this->launch = $launch;
+        return $this->id;
     }
 
-    public function getLaunch()
+    public function setName($name)
     {
-        return $this->launch;
+        $this->name = $name;
     }
 
-    public function setPostcode($postcode)
+    public function getName()
     {
-        $this->postcode = $postcode;
+        return $this->name;
     }
 
-    public function getPostcode()
+    public function getStages()
     {
-        return $this->postcode;
+        return $this->stages;
     }
 
-    public function setProvider($provider)
+    public function setStages($stages)
     {
-        $this->provider = $provider;
+        $this->stages = $stages;
     }
 
-    public function getProvider()
+    public function addStage($stage)
     {
-        return $this->provider;
+        $this->stages[] = $stage;
+    }
+
+    public function removeStage($stage)
+    {
+        $this->stages->removeElement($stage);
+    }
+
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
+    }
+
+    public function getCategories()
+    {
+        return $this->categories;
+    }
+
+    public function addCategory($category)
+    {
+        $this->categories[] = $category;
+    }
+
+    public function removeCategory($category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    public function setIssues($issues)
+    {
+        $this->issues = $issues;
+    }
+
+    public function getIssues()
+    {
+        return $this->issues;
+    }
+
+    public function addIssue($issue)
+    {
+        $this->issues[] = $issue;
+    }
+
+    public function removeIssue($issue)
+    {
+        $this->issues->removeElement($issue);
+    }
+
+    public function setServiceUsers($serviceUsers)
+    {
+        $this->serviceUsers = $serviceUsers;
+    }
+
+    public function getServiceUsers()
+    {
+        return $this->serviceUsers;
+    }
+
+    public function addServiceUser($serviceUser)
+    {
+        $this->serviceUsers[] = $serviceUser;
+    }
+
+    public function removeServiceUser($serviceUser)
+    {
+        $this->serviceUsers->removeElement($serviceUser);
     }
 }
 
