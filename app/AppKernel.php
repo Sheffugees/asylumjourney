@@ -26,6 +26,7 @@ class AppKernel extends Kernel
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
         );
 
