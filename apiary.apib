@@ -13,7 +13,12 @@ The home page.
         {
             "_links": {
                 "self": { "href": "/" },
-                "services": { "href": "/services" }
+                "services": { "href": "/services" },
+                "providers": { "href": "/providers" },
+                "stages": { "href": "/stages" },
+                "categories": { "href": "/categories" },
+                "service-users": { "href": "/service-users" },
+                "issues": { "href": "/issues" }
             }
         }
 
@@ -35,15 +40,63 @@ The home page.
             "_links": {
                 "self": { "href": "/services/1" }
             },
-            "id": "1",
             "name": "My Service",
-            "contact": "me",
-            "coverage": "Everywhere",
             "description": "This is a service",
-            "expiry":"2011-01-01T00:00:00+0000",
-            "launch":"2011-01-01T00:00:00+0000",
-            "postcode":"s1 2ns",
-            "provider":"Someone"
+            "dataMaintainer": "me",
+            "endDate":"2018-01-01T00:00:00+0000",
+             "_embedded": {
+                "providers": [
+                    {
+                        "_links": {
+                            "self": { "href": "/providers/1" }
+                        },
+                        "name": "A provider",
+                        "description": "This is a Provider",
+                        "phone": "0114 2222222",
+                        "email": "jeff@example.com",
+                        "website":"http://www.provider.example.com",
+                        "contactName":"Jeff Bdager",
+                        "address": "Badger House",
+                        "postcode": "S1 2NS"
+                    },
+                    {
+                        "_links": {
+                            "self": { "href": "/providers/2" }
+                        },
+                        "name": "Another provider",
+                        "description": "This is another Provider",
+                        "phone": "0114 11111111",
+                        "email": "barry@example.com",
+                        "website":"http://www.another-provider.example.com",
+                        "contactName":"Barry Bdager",
+                        "address": "Badger Tower",
+                        "postcode": "S11 8QD"
+                    }
+                ],
+                "stages": [
+                    {
+                        "_links": {
+                            "self": { "href": "/stages/1" }
+                        },
+                        "name": "Arrival"
+                    },
+                    {
+                        "_links": {
+                            "self": { "href": "/stages/2" }
+                        },
+                        "name": "Awaiting Decision"
+                    }
+                ],
+                "categories": [
+                    {
+                        "_links": {
+                            "self": { "href": "/categories/1" }
+                        },
+                        "name": "Education"
+                    }
+                ]
+            },
+            "total": 5
         }
 
 ### Read a Service [GET]
@@ -77,32 +130,519 @@ The home page.
                             "_links": {
                                 "self": { "href": "/services/1" }
                             },
-                            "id": "1",
                             "name": "My Service",
-                            "contact": "me",
-                            "coverage": "Everywhere",
                             "description": "This is a service",
-                            "expiry":"2011-01-01T00:00:00+0000",
-                            "launch":"2011-01-01T00:00:00+0000",
-                            "postcode":"s1 2ns",
-                            "provider":"Someone"
+                            "dataMaintainer": "me",
+                            "endDate":"2018-01-01T00:00:00+0000",
+                            "_embedded": {
+                                "providers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/providers/1" }
+                                        },
+                                        "name": "A provider",
+                                        "description": "This is a Provider",
+                                        "phone": "0114 2222222",
+                                        "email": "jeff@example.com",
+                                        "website":"http://www.provider.example.com",
+                                        "contactName":"Jeff Bdager",
+                                        "address": "Badger House",
+                                        "postcode": "S1 2NS"
+                                    },
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/providers/2" }
+                                        },
+                                        "name": "Another provider",
+                                        "description": "This is another Provider",
+                                        "phone": "0114 11111111",
+                                        "email": "barry@example.com",
+                                        "website":"http://www.another-provider.example.com",
+                                        "contactName":"Barry Bdager",
+                                        "address": "Badger Tower",
+                                        "postcode": "S11 8QD"
+                                    }
+                                ],
+                                "stages": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/stages/1" }
+                                        },
+                                        "name": "Arrival"
+                                    },
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/stages/2" }
+                                        },
+                                        "name": "Awaiting Decision"
+                                    }
+                                ],
+                                "categories": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/categories/1" }
+                                        },
+                                        "name": "Education"
+                                    }
+                                ],
+                                "total": 5
+                            }
                         },
                         {
                             "_links": {
                                 "self": { "href": "/services/2" }
                             },
-                            "id": "2",
                             "name": "Another Service",
-                            "contact": "Me",
-                            "coverage": "Some places",
-                            "description": "The description",
-                            "expiry":"2014-01-01T00:00:00+0000",
-                            "launch":"2011-01-01T00:00:00+0000",
-                            "postcode":"s11 7rd",
-                            "provider":"Me"
-                        }
+                            "description": "This is a another service",
+                            "dataMaintainer": "someone else",
+                            "endDate":"2018-01-01T00:00:00+0000",
+                            "_embedded": {
+                                "providers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/providers/2" }
+                                        },
+                                        "name": "Another provider",
+                                        "description": "This is another Provider",
+                                        "phone": "0114 11111111",
+                                        "email": "barry@example.com",
+                                        "website":"http://www.another-provider.example.com",
+                                        "contactName":"Barry Bdager",
+                                        "address": "Badger Tower",
+                                        "postcode": "S11 8QD"
+                                    }
+                                ],
+                                "stages": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/stages/3" }
+                                        },
+                                        "name": "Positive Decision"
+                                    }
+                                ],
+                                "categories": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/categories/6" }
+                                        },
+                                        "name": "Social/community (including volunteering)"
+                                    },
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/categories/7" }
+                                        },
+                                        "name": "Resources (Clothes,food etc)"
+                                    }
+                                ]
+                            },
+                            "total": 4
+                        }    
                     ]
                 },
                 "total": 2
             }
+            
+# Group Providers
+
+## Provider [/providers/{id}]
+
++ Parameters
+    + id (required, string, `1`) ... numeric `id` of the Provider to perform action with. Has example value.
+
++ Model
+
+        {
+            "_links": {
+                "self": { "href": "/providers/1" }
+            },
+            "name": "A provider",
+            "description": "This is a Provider",
+            "phone": "0114 2222222",
+            "email": "jeff@example.com",
+            "website":"http://www.provider.example.com",
+            "contactName":"Jeff Bdager",
+            "address": "Badger House",
+            "postcode": "S1 2NS"
+        }
+
+### Read a Provider [GET]
++ Response 200 (application/hal+json)
+
+    [Provider][]
+    
++ Response 404 (application/vnd.error+json)
+
+        {
+            "_links": {
+                "about": { "href": "/providers/9" }
+            },
+            "message": "provider not found"
+        }
         
+## Providers Collection [/providers]
+
+### List All Providers [GET]
+
++ Response 200 (application/hal+json)
+    + Body
+    
+            {
+                "_links": {
+                    "self": { "href": "/providers" }
+                },
+                "_embedded": {
+                    "providers": [
+                        {
+                            "_links": {
+                                "self": { "href": "/providers/1" }
+                            },
+                            "name": "A provider",
+                            "description": "This is a Provider",
+                            "phone": "0114 2222222",
+                            "email": "jeff@example.com",
+                            "website":"http://www.provider.example.com",
+                            "contactName":"Jeff Bdager",
+                            "address": "Badger House",
+                            "postcode": "S1 2NS"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/providers/2" }
+                            },
+                            "name": "Another provider",
+                            "description": "This is another Provider",
+                            "phone": "0114 11111111",
+                            "email": "barry@example.com",
+                            "website":"http://www.another-provider.example.com",
+                            "contactName":"Barry Bdager",
+                            "address": "Badger Tower",
+                            "postcode": "S11 8QD"
+                        }
+                    ]
+                },
+                "total": 2
+            } 
+            
+# Group Stages
+
+## Stage [/stages/{id}]
+
++ Parameters
+    + id (required, string, `1`) ... numeric `id` of the Stage to perform action with. Has example value.
+
++ Model
+
+        {
+            "_links": {
+                "self": { "href": "/stages/1" }
+            },
+            "name": "Arrival"
+        }
+
+### Read a Stage [GET]
++ Response 200 (application/hal+json)
+
+    [Stage][]
+    
++ Response 404 (application/vnd.error+json)
+
+        {
+            "_links": {
+                "about": { "href": "/stages/9" }
+            },
+            "message": "stage not found"
+        }
+        
+## Stages Collection [/stages]
+
+### List All Stages [GET]
+
++ Response 200 (application/hal+json)
+    + Body
+    
+            {
+                "_links": {
+                    "self": { "href": "/stages" }
+                },
+                "_embedded": {
+                    "stages": [
+                        {
+                            "_links": {
+                                "self": { "href": "/stages/1" }
+                            },
+                            "name": "Arrival"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/stages/2" }
+                            },
+                            "name": "Awaiting Decision"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/stages/3" }
+                            },
+                            "name": "Positive Decision"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/stages/4" }
+                            },
+                            "name": "Negative Decision - Under Appeal"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/stages/5" }
+                            },
+                            "name": "Negative Decision - Destitute"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/stages/6" }
+                            },
+                            "name": "Gateway Protection Programme"
+                        }
+                    ]
+                },
+                "total": 6
+            }   
+            
+# Group Categories
+
+## Category [/categories/{id}]
+
++ Parameters
+    + id (required, string, `1`) ... numeric `id` of the Category to perform action with. Has example value.
+
++ Model
+
+        {
+            "_links": {
+                "self": { "href": "/categories/1" }
+            },
+            "name": "Education"
+        }
+
+### Read a Category [GET]
++ Response 200 (application/hal+json)
+
+    [Category][]
+    
++ Response 404 (application/vnd.error+json)
+
+        {
+            "_links": {
+                "about": { "href": "/categories/9" }
+            },
+            "message": "category not found"
+        }
+        
+## Categories Collection [/categories]
+
+### List All Categories [GET]
+
++ Response 200 (application/hal+json)
+    + Body
+    
+            {
+                "_links": {
+                    "self": { "href": "/categories" }
+                },
+                "_embedded": {
+                    "categories": [
+                        {
+                            "_links": {
+                                "self": { "href": "/categories/1" }
+                            },
+                            "name": "Education"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/categories/2" }
+                            },
+                            "name": "Health and social care"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/categories/3" }
+                            },
+                            "name": "Housing"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/categories/4" }
+                            },
+                            "name": "Finance (Personal)"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/categories/5" }
+                            },
+                            "name": "Asylum process and legal advice"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/categories/6" }
+                            },
+                            "name": "Social/community (including volunteering)"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/categories/7" }
+                            },
+                            "name": "Resources (Clothes,food etc)"
+                        }
+                    ]
+                },
+                "total": 7
+            }               
+            
+# Group Service Users
+
+## ServiceUser [/service-users/{id}]
+
++ Parameters
+    + id (required, string, `1`) ... numeric `id` of the Service User to perform action with. Has example value.
+
++ Model
+
+        {
+            "_links": {
+                "self": { "href": "/service-users/1" }
+            },
+            "name": "All asylum seekers - no exclusions"
+        }
+
+### Read a ServiceUser [GET]
++ Response 200 (application/hal+json)
+
+    [ServiceUser][]
+    
++ Response 404 (application/vnd.error+json)
+
+        {
+            "_links": {
+                "about": { "href": "/service-users/9" }
+            },
+            "message": "service user not found"
+        }
+        
+## ServiceUsers Collection [/service-users]
+
+### List All ServiceUsers [GET]
+
++ Response 200 (application/hal+json)
+    + Body
+    
+            {
+                "_links": {
+                    "self": { "href": "/service-users" }
+                },
+                "_embedded": {
+                    "service-users": [
+                        {
+                            "_links": {
+                                "self": { "href": "/service-users/1" }
+                            },
+                            "name": "All asylum seekers - no exclusions"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/service-users/2" }
+                            },
+                            "name": "Families"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/service-users/3" }
+                            },
+                            "name": "Children (under 18 years)"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/service-users/4" }
+                            },
+                            "name": "Vulnerable adults"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/service-users/5" }
+                            },
+                            "name": "Single men"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/service-users/6" }
+                            },
+                            "name": "Single women"
+                        }
+                    ]
+                },
+                "total": 6
+            }               
+                        
+# Group Issues
+
+## Issue [/issues/{id}]
+
++ Parameters
+    + id (required, string, `1`) ... numeric `id` of the Issue to perform action with. Has example value.
+
++ Model
+
+        {
+            "_links": {
+                "self": { "href": "/issues/1" }
+            },
+            "name": "Service is under-resourced or needs further support"
+        }
+
+### Read an Issue [GET]
++ Response 200 (application/hal+json)
+
+    [Issue][]
+    
++ Response 404 (application/vnd.error+json)
+
+        {
+            "_links": {
+                "about": { "href": "/issues/9" }
+            },
+            "message": "Issue not found"
+        }
+        
+## Issues Collection [/issues]
+
+### List All Issues [GET]
+
++ Response 200 (application/hal+json)
+    + Body
+    
+            {
+                "_links": {
+                    "self": { "href": "/issues" }
+                },
+                "_embedded": {
+                    "issues": [
+                        {
+                            "_links": {
+                                "self": { "href": "/issues/1" }
+                            },
+                            "name": "Service is under-resourced or needs further support"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/issues/2" }
+                            },
+                            "name": "Gap in provision"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/issues/3" }
+                            },
+                            "name": "needs immediate action"
+                        }
+                    ]
+                },
+                "total": 3
+            }                      
