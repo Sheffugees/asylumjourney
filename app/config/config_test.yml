@@ -14,3 +14,6 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+parameters:
+    database_path: '%kernel.root_dir%/data-test.db3'

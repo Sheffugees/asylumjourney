@@ -2,7 +2,7 @@ dry-run: null
 hookfiles: null
 language: nodejs
 sandbox: false
-server: 'php app/console server:run'
+server: 'php app/console --env=test app:fixtures && php app/console --env=test server:run 127.0.0.1:9090'
 server-wait: 10
 init: false
 custom: {}
@@ -22,4 +22,4 @@ timestamp: false
 silent: false
 path: []
 blueprint: apiary.apib
-endpoint: 'http://localhost:8000'
+endpoint: 'http://localhost:9090'
