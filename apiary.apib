@@ -17,7 +17,7 @@ The home page.
                 "providers": { "href": "/providers" },
                 "stages": { "href": "/stages" },
                 "categories": { "href": "/categories" },
-                "service-users": { "href": "/service-users" },
+                "serviceUsers": { "href": "/service-users" },
                 "issues": { "href": "/issues" }
             }
         }
@@ -40,6 +40,7 @@ The home page.
             "_links": {
                 "self": { "href": "/services/1" }
             },
+            "id": 1,
             "name": "My Service",
             "description": "This is a service",
             "dataMaintainer": "me",
@@ -50,6 +51,7 @@ The home page.
                         "_links": {
                             "self": { "href": "/providers/1" }
                         },
+                        "id": 1,
                         "name": "A provider",
                         "description": "This is a Provider",
                         "phone": "0114 2222222",
@@ -63,6 +65,7 @@ The home page.
                         "_links": {
                             "self": { "href": "/providers/2" }
                         },
+                        "id": 2,
                         "name": "Another provider",
                         "description": "This is another Provider",
                         "phone": "0114 11111111",
@@ -78,12 +81,14 @@ The home page.
                         "_links": {
                             "self": { "href": "/stages/1" }
                         },
+                        "id": 1,
                         "name": "Arrival"
                     },
                     {
                         "_links": {
                             "self": { "href": "/stages/2" }
                         },
+                        "id": 2,
                         "name": "Awaiting Decision"
                     }
                 ],
@@ -92,11 +97,36 @@ The home page.
                         "_links": {
                             "self": { "href": "/categories/1" }
                         },
+                        "id": 1,
                         "name": "Education"
                     }
+                ],
+                "serviceUsers": [
+                    {
+                        "_links": {
+                            "self": { "href": "/service-users/2" }
+                        },
+                        "id": 2,
+                        "name": "Families"
+                    },
+                    {
+                        "_links": {
+                            "self": { "href": "/service-users/3" }
+                        },
+                        "id": 3,
+                        "name": "Children (under 18 years)"
+                    }
+                ],
+                "issues": [
+                    {
+                        "_links": {
+                            "self": { "href": "/issues/2" }
+                        },
+                        "id": 2,
+                        "name": "Gap in provision"
+                    }
                 ]
-            },
-            "total": 5
+            }
         }
 
 ### Read a Service [GET]
@@ -130,6 +160,7 @@ The home page.
                             "_links": {
                                 "self": { "href": "/services/1" }
                             },
+                            "id": 1,
                             "name": "My Service",
                             "description": "This is a service",
                             "dataMaintainer": "me",
@@ -140,6 +171,7 @@ The home page.
                                         "_links": {
                                             "self": { "href": "/providers/1" }
                                         },
+                                        "id": 1,
                                         "name": "A provider",
                                         "description": "This is a Provider",
                                         "phone": "0114 2222222",
@@ -153,6 +185,7 @@ The home page.
                                         "_links": {
                                             "self": { "href": "/providers/2" }
                                         },
+                                        "id": 2,
                                         "name": "Another provider",
                                         "description": "This is another Provider",
                                         "phone": "0114 11111111",
@@ -168,12 +201,14 @@ The home page.
                                         "_links": {
                                             "self": { "href": "/stages/1" }
                                         },
+                                        "id": 1,
                                         "name": "Arrival"
                                     },
                                     {
                                         "_links": {
                                             "self": { "href": "/stages/2" }
                                         },
+                                        "id": 2,
                                         "name": "Awaiting Decision"
                                     }
                                 ],
@@ -182,16 +217,42 @@ The home page.
                                         "_links": {
                                             "self": { "href": "/categories/1" }
                                         },
+                                        "id": 1,
                                         "name": "Education"
                                     }
                                 ],
-                                "total": 5
+                                "serviceUsers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/service-users/2" }
+                                        },
+                                        "id": 2,
+                                        "name": "Families"
+                                    },
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/service-users/3" }
+                                        },
+                                        "id": 3,
+                                        "name": "Children (under 18 years)"
+                                    }
+                                ],
+                                "issues": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/issues/2" }
+                                        },
+                                        "id": 2,
+                                        "name": "Gap in provision"
+                                    }
+                                ]
                             }
                         },
                         {
                             "_links": {
                                 "self": { "href": "/services/2" }
                             },
+                            "id": 2,
                             "name": "Another Service",
                             "description": "This is a another service",
                             "dataMaintainer": "someone else",
@@ -202,6 +263,7 @@ The home page.
                                         "_links": {
                                             "self": { "href": "/providers/2" }
                                         },
+                                        "id": 2,
                                         "name": "Another provider",
                                         "description": "This is another Provider",
                                         "phone": "0114 11111111",
@@ -217,6 +279,7 @@ The home page.
                                         "_links": {
                                             "self": { "href": "/stages/3" }
                                         },
+                                        "id": 3,
                                         "name": "Positive Decision"
                                     }
                                 ],
@@ -225,17 +288,36 @@ The home page.
                                         "_links": {
                                             "self": { "href": "/categories/6" }
                                         },
+                                        "id": 6,
                                         "name": "Social/community (including volunteering)"
                                     },
                                     {
                                         "_links": {
                                             "self": { "href": "/categories/7" }
                                         },
+                                        "id": 7,
                                         "name": "Resources (Clothes,food etc)"
                                     }
+                                ],
+                                "serviceUsers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/service-users/1" }
+                                        },
+                                        "id": 1,
+                                        "name": "All asylum seekers - no exclusions"
+                                    }
+                                ],
+                                "issues": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/issues/3" }
+                                        },
+                                        "id": 3,
+                                        "name": "Needs immediate action"
+                                    }
                                 ]
-                            },
-                            "total": 4
+                            }
                         }    
                     ]
                 },
@@ -255,6 +337,7 @@ The home page.
             "_links": {
                 "self": { "href": "/providers/1" }
             },
+            "id": 1,
             "name": "A provider",
             "description": "This is a Provider",
             "phone": "0114 2222222",
@@ -296,6 +379,7 @@ The home page.
                             "_links": {
                                 "self": { "href": "/providers/1" }
                             },
+                            "id": 1,
                             "name": "A provider",
                             "description": "This is a Provider",
                             "phone": "0114 2222222",
@@ -309,6 +393,7 @@ The home page.
                             "_links": {
                                 "self": { "href": "/providers/2" }
                             },
+                            "id": 2,
                             "name": "Another provider",
                             "description": "This is another Provider",
                             "phone": "0114 11111111",
@@ -336,6 +421,7 @@ The home page.
             "_links": {
                 "self": { "href": "/stages/1" }
             },
+            "id": 1,
             "name": "Arrival"
         }
 
@@ -370,36 +456,42 @@ The home page.
                             "_links": {
                                 "self": { "href": "/stages/1" }
                             },
+                            "id": 1,
                             "name": "Arrival"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/stages/2" }
                             },
+                            "id": 2,
                             "name": "Awaiting Decision"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/stages/3" }
                             },
+                            "id": 3,
                             "name": "Positive Decision"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/stages/4" }
                             },
+                            "id": 4,
                             "name": "Negative Decision - Under Appeal"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/stages/5" }
                             },
+                            "id": 5,
                             "name": "Negative Decision - Destitute"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/stages/6" }
                             },
+                            "id": 6,
                             "name": "Gateway Protection Programme"
                         }
                     ]
@@ -420,6 +512,7 @@ The home page.
             "_links": {
                 "self": { "href": "/categories/1" }
             },
+            "id": 1,
             "name": "Education"
         }
 
@@ -454,42 +547,49 @@ The home page.
                             "_links": {
                                 "self": { "href": "/categories/1" }
                             },
+                            "id": 1,
                             "name": "Education"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/2" }
                             },
+                            "id": 2,
                             "name": "Health and social care"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/3" }
                             },
+                            "id": 3,
                             "name": "Housing"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/4" }
                             },
+                            "id": 4,
                             "name": "Finance (Personal)"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/5" }
                             },
+                            "id": 5,
                             "name": "Asylum process and legal advice"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/6" }
                             },
+                            "id": 6,
                             "name": "Social/community (including volunteering)"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/7" }
                             },
+                            "id": 7,
                             "name": "Resources (Clothes,food etc)"
                         }
                     ]
@@ -510,6 +610,7 @@ The home page.
             "_links": {
                 "self": { "href": "/service-users/1" }
             },
+            "id": 1,
             "name": "All asylum seekers - no exclusions"
         }
 
@@ -539,41 +640,47 @@ The home page.
                     "self": { "href": "/service-users" }
                 },
                 "_embedded": {
-                    "service-users": [
+                    "serviceUsers": [
                         {
                             "_links": {
                                 "self": { "href": "/service-users/1" }
                             },
+                            "id": 1,
                             "name": "All asylum seekers - no exclusions"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/service-users/2" }
                             },
+                            "id": 2,
                             "name": "Families"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/service-users/3" }
                             },
+                            "id": 3,
                             "name": "Children (under 18 years)"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/service-users/4" }
                             },
+                            "id": 4,
                             "name": "Vulnerable adults"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/service-users/5" }
                             },
+                            "id": 5,
                             "name": "Single men"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/service-users/6" }
                             },
+                            "id": 6,
                             "name": "Single women"
                         }
                     ]
@@ -594,6 +701,7 @@ The home page.
             "_links": {
                 "self": { "href": "/issues/1" }
             },
+            "id": 1,
             "name": "Service is under-resourced or needs further support"
         }
 
@@ -628,19 +736,22 @@ The home page.
                             "_links": {
                                 "self": { "href": "/issues/1" }
                             },
+                            "id": 1,
                             "name": "Service is under-resourced or needs further support"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/issues/2" }
                             },
+                            "id": 2,
                             "name": "Gap in provision"
                         },
                         {
                             "_links": {
                                 "self": { "href": "/issues/3" }
                             },
-                            "name": "needs immediate action"
+                            "id": 3,
+                            "name": "Needs immediate action"
                         }
                     ]
                 },

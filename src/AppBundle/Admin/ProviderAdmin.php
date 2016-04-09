@@ -13,7 +13,7 @@ class ProviderAdmin extends Admin
     {
         $formMapper->add('name', 'text');
         $formMapper->add('description', 'textarea');
-        $formMapper->add('phoneNumber', 'text');
+        $formMapper->add('phone', 'text');
         $formMapper->add('email', 'text');
         $formMapper->add('website', 'text');
         $formMapper->add('contactName', 'text');

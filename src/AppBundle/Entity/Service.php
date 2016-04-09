@@ -39,6 +39,11 @@ class Service
     private $endDate;
 
     /**
+     * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Provider")
+     */
+    private $providers;
+
+    /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Stage")
      */
     private $stages;
@@ -58,13 +63,17 @@ class Service
      */
     private $issues;
 
-    function __construct($dataMaintainer, $description, $endDate, $name)
+    function __construct($name, $description, $dataMaintainer, $endDate)
     {
         $this->dataMaintainer = $dataMaintainer;
         $this->description = $description;
         $this->endDate = $endDate;
         $this->name = $name;
         $this->stages = new ArrayCollection();
+        $this->providers = new ArrayCollection();
+        $this->issues = new ArrayCollection();
+        $this->serviceUsers = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function setDataMaintainer($dataMaintainer)
@@ -122,7 +131,7 @@ class Service
         $this->stages = $stages;
     }
 
-    public function addStage($stage)
+    public function addStage(Stage $stage)
     {
         $this->stages[] = $stage;
     }
@@ -147,7 +156,7 @@ class Service
         return $this->categories;
     }
 
-    public function addCategory($category)
+    public function addCategory(Category $category)
     {
         $this->categories[] = $category;
     }
@@ -167,7 +176,7 @@ class Service
         return $this->issues;
     }
 
-    public function addIssue($issue)
+    public function addIssue(Issue $issue)
     {
         $this->issues[] = $issue;
     }
@@ -187,7 +196,7 @@ class Service
         return $this->serviceUsers;
     }
 
-    public function addServiceUser($serviceUser)
+    public function addServiceUser(ServiceUser $serviceUser)
     {
         $this->serviceUsers[] = $serviceUser;
     }
@@ -195,6 +204,26 @@ class Service
     public function removeServiceUser($serviceUser)
     {
         $this->serviceUsers->removeElement($serviceUser);
+    }
+
+    public function setProviders($providers)
+    {
+        $this->providers = $providers;
+    }
+
+    public function getProviders()
+    {
+        return $this->providers;
+    }
+
+    public function addProvider(Provider $provider)
+    {
+        $this->providers[] = $provider;
+    }
+
+    public function removeProvider($provider)
+    {
+        $this->$providers->removeElement($provider);
     }
 }
 

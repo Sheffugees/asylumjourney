@@ -30,7 +30,7 @@ class Provider
     /**
      * @ORM\Column(name="$phoneNumber", type="string", length=255)
      */
-    private $phoneNumber;
+    private $phone;
 
     /**
      * @ORM\Column(name="email", type="string", length=255)
@@ -57,14 +57,14 @@ class Provider
      */
     private $address;
 
-    function __construct($address, $contactName, $description, $email, $name, $phoneNumber, $postcode, $website)
+    function __construct($name, $description, $phoneNumber, $email, $website, $contactName, $address, $postcode)
     {
         $this->address = $address;
         $this->contactName = $contactName;
         $this->description = $description;
         $this->email = $email;
         $this->name = $name;
-        $this->phoneNumber = $phoneNumber;
+        $this->phone = $phoneNumber;
         $this->postcode = $postcode;
         $this->website = $website;
     }
@@ -124,14 +124,14 @@ class Provider
         return $this->name;
     }
 
-    public function setPhoneNumber($phoneNumber)
+    public function setPhone($phone)
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->phone = $phone;
     }
 
-    public function getPhoneNumber()
+    public function getPhone()
     {
-        return $this->phoneNumber;
+        return $this->phone;
     }
 
     public function setPostcode($postcode)
