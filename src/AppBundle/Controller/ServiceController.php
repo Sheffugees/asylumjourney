@@ -91,7 +91,7 @@ class ServiceController extends Controller
             );
         }
 
-        foreach ($service->getCategories() as $serviceUser) {
+        foreach ($service->getServiceUsers() as $serviceUser) {
             $hal->addResource(
                 'serviceUsers',
                 (new Hal('/service-users/' . $serviceUser->getId()))->setData($normalizer->normalize($serviceUser))
