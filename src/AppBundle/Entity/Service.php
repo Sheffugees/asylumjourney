@@ -131,9 +131,15 @@ class Service
         $this->stages = $stages;
     }
 
-    public function addStage(Stage $stage)
+    public function addStage(Stage $newStage)
     {
-        $this->stages[] = $stage;
+        foreach ($this->stages as $stage) {
+            if ($stage->getId() == $newStage->getId()) {
+                return;
+            }
+        }
+
+        $this->stages[] = $newStage;
     }
 
     public function removeStage($stage)

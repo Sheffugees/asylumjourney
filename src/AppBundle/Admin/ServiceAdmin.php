@@ -13,7 +13,7 @@ class ServiceAdmin extends Admin
     {
         $formMapper->add('name', 'text');
         $formMapper->add('description', 'textarea');
-        $formMapper->add('dataMaintainer', 'textarea');
+        $formMapper->add('dataMaintainer', 'text');
         $formMapper->add('endDate', 'date');
         $formMapper->add('providers', 'sonata_type_model', ['multiple' => true]);
         $formMapper->add('stages', 'sonata_type_model', ['multiple' => true]);
