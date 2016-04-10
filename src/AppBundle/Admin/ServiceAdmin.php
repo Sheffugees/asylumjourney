@@ -12,14 +12,14 @@ class ServiceAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('name', 'text');
-        $formMapper->add('description', 'textarea');
-        $formMapper->add('dataMaintainer', 'text');
-        $formMapper->add('endDate', 'date');
-        $formMapper->add('providers', 'sonata_type_model', ['multiple' => true]);
+        $formMapper->add('description', 'textarea', ['required' => false]);
+        $formMapper->add('dataMaintainer', 'text', ['required' => false]);
+        $formMapper->add('endDate', 'date', ['required' => false]);
+        $formMapper->add('providers', 'sonata_type_model', ['multiple' => true, 'required' => false]);
         $formMapper->add('stages', 'sonata_type_model', ['multiple' => true]);
         $formMapper->add('categories', 'sonata_type_model', ['multiple' => true]);
         $formMapper->add('serviceUsers', 'sonata_type_model', ['multiple' => true]);
-        $formMapper->add('issues', 'sonata_type_model', ['multiple' => true]);
+        $formMapper->add('issues', 'sonata_type_model', ['multiple' => true, 'required' => false]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
