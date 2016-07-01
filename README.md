@@ -33,6 +33,18 @@ php app/console server:run
 
 Admin section can be found at `/admin`, log in with the details provided when running `fos:user:create`
 
+## Trello Import
+
+Data can be imported from the Trello CSV export. This is intended for switching over from using Trello 
+to enter data to using the admin panel rather than as an ongoing process. **The import deletes the existing
+data.**
+
+The CSV export needs to be in the root directory, named `trello.csv` and have the header line removed.
+Then run:
+
+```
+php app/console app:csv-import
+```
 
 ## Task list
 
