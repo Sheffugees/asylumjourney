@@ -21,11 +21,11 @@ class ServiceController extends Controller
         $query = $em->createQuery('
             SELECT s, p, st, c, su, i
             FROM AppBundle:Service s
-            JOIN s.providers p
-            JOIN s.stages st
-            JOIN s.categories c
-            JOIN s.serviceUsers su
-            JOIN s.issues i
+            LEFT JOIN s.providers p
+            LEFT JOIN s.stages st
+            LEFT JOIN s.categories c
+            LEFT JOIN s.serviceUsers su
+            LEFT JOIN s.issues i
         ');
         $services = $query->getResult();
 
