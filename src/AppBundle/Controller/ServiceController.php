@@ -55,7 +55,7 @@ class ServiceController extends Controller
             'name' => $service->getName(),
             'description' => $service->getDescription(),
             'dataMaintainer' => $service->getDataMaintainer(),
-            'endDate' => $service->getEndDate()->format(\DateTime::ISO8601)
+            'endDate' => $service->getISO8601EndDate()
         ];
     }
 

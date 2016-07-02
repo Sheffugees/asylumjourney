@@ -106,6 +106,13 @@ class Service
         return $this->endDate;
     }
 
+    public function getISO8601EndDate() {
+        if ($this->endDate) {
+            return $this->endDate->format(\DateTime::ISO8601);
+        }
+        return null;
+    }
+
     public function getId()
     {
         return $this->id;
