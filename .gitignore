@@ -11,3 +11,5 @@
 /bin/
 /composer.phar
 node_modules/
+trello.json
+trello.csv
