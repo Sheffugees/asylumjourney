@@ -77,7 +77,8 @@ php app/console app:csv-import
 
 Deploying code to Heroku can be done by pushing to the relevant git repo.
 The one of job of importing data from Trello is probably best done by doing it locally
-and using mysqldump and importing that on Heroku. 
+and using mysqldump and importing that on Heroku. **This will also replace any user for the admin
+section with the local ones**
 
 ## Task list
 
