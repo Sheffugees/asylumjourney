@@ -24,8 +24,12 @@ class ServiceAdmin extends Admin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper->add('name');
-        $datagridMapper->add('description');
+        $datagridMapper
+            ->add('name')
+            ->add('description')
+            ->add('providers')
+            ->add('stages')
+            ->add('categories');
     }
 
     protected function configureListFields(ListMapper $listMapper)
