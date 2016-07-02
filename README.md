@@ -39,6 +39,11 @@ Needs composer for package management, see installation instructions at https://
 
 There is no developer environment (e.g. Vagrant) at the moment, requires PHP 5.6+ and Mysql. There's half-hearted `Dockerfile` which sort-of works to get the right PHP version - but you're on your own for the database.
 
+```sh
+docker build -t asylumjourney .
+docker run -it -p 8000:8000 -v $(pwd):/srv/asylumjourney asylumjourney
+```
+
 The Mysql username, password and database can be set in the `app/config/parameters.yml` file
 (this file is not kept in version control so local parameters can be
  safely added to it)
