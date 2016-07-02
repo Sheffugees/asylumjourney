@@ -73,6 +73,12 @@ Then run:
 php app/console app:csv-import
 ```
 
+## Heroku
+
+Deploying code to Heroku can be done by pushing to the relevant git repo.
+The one of job of importing data from Trello is probably best done by doing it locally
+and using mysqldump and importing that on Heroku. 
+
 ## Task list
 
 https://trello.com/b/HCxgrmFQ/asylum-journey-task-list
