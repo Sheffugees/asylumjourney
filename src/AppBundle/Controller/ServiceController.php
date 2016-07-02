@@ -17,7 +17,17 @@ class ServiceController extends Controller
      */
     public function listServicesAction()
     {
-        $services = $this->getDoctrine()->getRepository("AppBundle:Service")->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('
+            SELECT s, p, st, c, su, i
+            FROM AppBundle:Service s
+            JOIN s.providers p
+            JOIN s.stages st
+            JOIN s.categories c
+            JOIN s.serviceUsers su
+            JOIN s.issues i
+        ');
+        $services = $query->getResult();
 
         $hal = new Hal('/services', ['total' => count($services)]);
 
