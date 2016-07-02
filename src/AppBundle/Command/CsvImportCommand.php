@@ -51,6 +51,10 @@ class CsvImportCommand extends ContainerAwareCommand
         $file->setFlags(\SplFileObject::READ_CSV);
 
         foreach ($file as $row) {
+
+            // Skip header row or empty row
+            if ($row[0] == "Card ID" || $row[0] == null) continue;
+
             $matches = [];
             $name = $row[1];
             if (preg_match('/(.*)\((.*)\)/', $row[1], $matches)) {
@@ -69,6 +73,9 @@ class CsvImportCommand extends ContainerAwareCommand
                 $service->addProvider($this->providers[$providerName]);
             }
 
+            $output->writeln("---");
+            $output->writeln("Processing " . $name);
+
             switch ($row[15]) {
                 case "Arrival":
                     $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(1));
@@ -79,16 +86,21 @@ class CsvImportCommand extends ContainerAwareCommand
                 case "Positive Decision":
                     $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(3));
                     break;
-                case "Negative Decision under appeal - Section 4":
-                    $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(4));
-                    break;
-                case "Negative Decision - Destitute":
+                case "Positive decision - no recourse to public funds":
                     $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(5));
                     break;
-                case "Gateway Protection programme (Refugee Council)":
+                case "Negative Decision - with state support (e.g. section 4)":
+                    $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(5));
+                    break;
+                case "Negative Decision - Destitute":
                     $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(6));
                     break;
-
+                case "Gateway Protection programme (Refugee Council)":
+                    $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(7));
+                    break;
+                default:
+                    $output->writeln("Skipping because list is " . $row[15]);
+                    continue 2;
             }
 
             foreach (explode(',', $row[4]) as $label) {
@@ -128,20 +140,23 @@ class CsvImportCommand extends ContainerAwareCommand
                     case "Awaiting Decision (yellow)":
                         $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(2));
                         break;
-                    case "Negative Decision Under Appeal  S4  (sky)":
+                    case "Positive no recourse (black)":
                         $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(4));
                         break;
-                    case "Negative Decision/Destitute (orange)":
+                    case "Negative Decision with state support  e.g section 4  (sky)":
                         $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(5));
                         break;
-                    case "Gateway":
+                    case "Negative Decision/Destitute (orange)":
                         $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(6));
+                        break;
+                    case "Gateway":
+                        $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(7));
                         break;
 
                     case "Education":
                         $service->addCategory($manager->getRepository('AppBundle\\Entity\\Category')->find(1));
                         break;
-                    case "Housing":
+                    case "Accommodation":
                         $service->addCategory($manager->getRepository('AppBundle\\Entity\\Category')->find(3));
                         break;
                     case "Health & Social Care":
@@ -161,7 +176,7 @@ class CsvImportCommand extends ContainerAwareCommand
                         break;
 
                     default:
-                        var_dump('Unhandled label - '. $label);
+                        $output->writeln('Unhandled label - '. $label);
 
 
                 }
@@ -169,6 +184,7 @@ class CsvImportCommand extends ContainerAwareCommand
 
 
             $manager->persist($service);
+            $output->writeln("OK");
         }
         $manager->flush();
 
