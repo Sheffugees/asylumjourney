@@ -12,7 +12,7 @@ class ServiceAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('name', 'text');
-        $formMapper->add('description', 'textarea', ['required' => false]);
+        $formMapper->add('description', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
         $formMapper->add('dataMaintainer', 'text', ['required' => false]);
         $formMapper->add('endDate', 'date', ['required' => false]);
         $formMapper->add('providers', 'sonata_type_model', ['multiple' => true, 'required' => false]);
