@@ -24,17 +24,17 @@ class Service
     private $name;
 
     /**
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(name="maintainer", type="string", length=255)
+     * @ORM\Column(name="maintainer", type="string", length=255, nullable=true)
      */
     private $dataMaintainer;
 
     /**
-     * @ORM\Column(name="endDate", type="date")
+     * @ORM\Column(name="endDate", type="date", nullable=true)
      */
     private $endDate;
 

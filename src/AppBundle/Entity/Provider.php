@@ -23,41 +23,41 @@ class Provider
     private $name;
 
     /**
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(name="$phoneNumber", type="string", length=255)
+     * @ORM\Column(name="$phoneNumber", type="string", length=255, nullable=true)
      */
     private $phone;
 
     /**
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
      */
     private $email;
 
     /**
-     * @ORM\Column(name="website", type="string", length=255)
+     * @ORM\Column(name="website", type="string", length=255, nullable=true)
      */
     private $website;
 
     /**
-     * @ORM\Column(name="contactName", type="string", length=255)
+     * @ORM\Column(name="contactName", type="string", length=255, nullable=true)
      */
     private $contactName;
 
     /**
-     * @ORM\Column(name="postcode", type="string", length=20)
+     * @ORM\Column(name="postcode", type="string", length=20, nullable=true)
      */
     private $postcode;
 
     /**
-     * @ORM\Column(name="address", type="text")
+     * @ORM\Column(name="address", type="text", nullable=true)
      */
     private $address;
 
-    function __construct($name, $description, $phoneNumber, $email, $website, $contactName, $address, $postcode)
+    function __construct($name, $description = null, $phoneNumber = null, $email = null, $website = null, $contactName = null, $address = null, $postcode = null)
     {
         $this->address = $address;
         $this->contactName = $contactName;

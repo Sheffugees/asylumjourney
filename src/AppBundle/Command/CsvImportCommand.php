@@ -2,6 +2,7 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\Provider;
 use AppBundle\Entity\Service;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,6 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CsvImportCommand extends ContainerAwareCommand
 {
+    private $providers;
+
     protected function configure()
     {
         $this
@@ -28,12 +31,14 @@ class CsvImportCommand extends ContainerAwareCommand
         try {
             $connection->query('SET FOREIGN_KEY_CHECKS=0');
             $connection->query('DELETE FROM ' . $cmd->getTableName());
+            $connection->query('DELETE FROM provider');
             $connection->query('DELETE FROM service_stage');
             $connection->query('DELETE FROM service_issue');
             $connection->query('DELETE FROM service_provider');
             $connection->query('DELETE FROM service_category');
             $connection->query('DELETE FROM service_service_user');
             $connection->query('ALTER TABLE ' . $cmd->getTableName() . ' AUTO_INCREMENT = 1');
+            $connection->query('ALTER TABLE provider AUTO_INCREMENT = 1');
             // Beware of ALTER TABLE here--it's another DDL statement and will cause
             // an implicit commit.
             $connection->query('SET FOREIGN_KEY_CHECKS=1');
@@ -46,7 +51,23 @@ class CsvImportCommand extends ContainerAwareCommand
         $file->setFlags(\SplFileObject::READ_CSV);
 
         foreach ($file as $row) {
-            $service = new Service($row[1], $row[3], "", new \DateTimeImmutable("+ 10 years"));
+            $matches = [];
+            $name = $row[1];
+            if (preg_match('/(.*)\((.*)\)/', $row[1], $matches)) {
+                $name = trim($matches[1]);
+                $providerName = $matches[2];
+
+                if(!isset($this->providers[$providerName])) {
+                    $provider = new Provider($providerName);
+                    $manager->persist($provider);
+                    $this->providers[$providerName] = $provider;
+                }
+            }
+
+            $service = new Service($name, $row[3], null, null);
+            if(isset($providerName)) {
+                $service->addProvider($this->providers[$providerName]);
+            }
 
             switch ($row[15]) {
                 case "Arrival":
@@ -113,6 +134,9 @@ class CsvImportCommand extends ContainerAwareCommand
                     case "Negative Decision/Destitute (orange)":
                         $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(5));
                         break;
+                    case "Gateway":
+                        $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(6));
+                        break;
 
                     case "Education":
                         $service->addCategory($manager->getRepository('AppBundle\\Entity\\Category')->find(1));
@@ -137,7 +161,7 @@ class CsvImportCommand extends ContainerAwareCommand
                         break;
 
                     default:
-                        var_dump($label);
+                        var_dump('Unhandled label - '. $label);
 
 
                 }
