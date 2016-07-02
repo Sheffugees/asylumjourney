@@ -4,7 +4,7 @@ Symfony API and admin backend for the Asylum Journey project.
 
 The admin backend uses the Sonata admin bundle.
 
-The API is JSON using HAL for HATEOS type stuff. 
+The API is JSON using HAL for HATEOS type stuff.
 
 ## API Documentation
 
@@ -18,26 +18,27 @@ and copied back (or the integration between Github and Apiary set up)
 
 ### Testing the API Documentation
 
-Dredd (https://github.com/apiaryio/dredd) can be used to test that the API matches the documentation. 
+Dredd (https://github.com/apiaryio/dredd) can be used to test that the API matches the documentation.
 This needs to be installed with npm:
 
 ```
 npm install
 ```
 
-and then run with 
+and then run with
 
 ```
 ./node_modules/.bin/dredd
 ```
 
-It runs the `AppBundle\Command\FixturesCommand` to set up the test data, so any additional data can be added there. 
+It runs the `AppBundle\Command\FixturesCommand` to set up the test data, so any additional data can be added there.
 
 ## Getting Started
 
 Needs composer for package management, see installation instructions at https://getcomposer.org/doc/00-intro.md
 
-There is no developer environment (e.g. Vagrant) at the moment, requires PHP 5.6+ and Mysql.
+There is no developer environment (e.g. Vagrant) at the moment, requires PHP 5.6+ and Mysql. There's half-hearted `Dockerfile` which sort-of works to get the right PHP version - but you're on your own for the database.
+
 The Mysql username, password and database can be set in the `app/config/parameters.yml` file
 (this file is not kept in version control so local parameters can be
  safely added to it)
@@ -62,7 +63,7 @@ Admin section can be found at `/admin`, log in with the details provided when ru
 
 ## Trello Import
 
-Data can be imported from the Trello CSV export. This is intended for switching over from using Trello 
+Data can be imported from the Trello CSV export. This is intended for switching over from using Trello
 to enter data to using the admin panel rather than as an ongoing process. **The import deletes the existing
 data.**
 
