@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="service")
+ * @ORM\Table(name="service", indexes={@ORM\Index(name="hidden_idx", columns={"hidden"})})
  * @ORM\Entity
  */
 class Service
@@ -22,6 +22,11 @@ class Service
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @ORM\Column(name="hidden", type="boolean")
+     */
+    private $hidden;
 
     /**
      * @ORM\Column(name="description", type="text", nullable=true)
@@ -69,6 +74,7 @@ class Service
         $this->description = $description;
         $this->endDate = $endDate;
         $this->name = $name;
+        $this->hidden = false;
         $this->stages = new ArrayCollection();
         $this->providers = new ArrayCollection();
         $this->issues = new ArrayCollection();
@@ -126,6 +132,16 @@ class Service
     public function getName()
     {
         return $this->name;
+    }
+
+    public function setHidden($hidden)
+    {
+        $this->hidden = $hidden;
+    }
+
+    public function getHidden()
+    {
+        return $this->hidden;
     }
 
     public function getStages()

@@ -12,6 +12,7 @@ class ServiceAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper->add('name', 'text');
+        $formMapper->add('hidden', 'checkbox');
         $formMapper->add('description', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
         $formMapper->add('dataMaintainer', 'text', ['required' => false]);
         $formMapper->add('endDate', 'date', ['required' => false]);
@@ -26,6 +27,7 @@ class ServiceAdmin extends Admin
     {
         $datagridMapper
             ->add('name')
+            ->add('hidden')
             ->add('description')
             ->add('providers')
             ->add('stages')
