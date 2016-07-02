@@ -1,4 +1,4 @@
-# asylumjourney-frontend
+# Asylum Journey
 
 Symfony API and admin backend for the Asylum Journey project.
 
