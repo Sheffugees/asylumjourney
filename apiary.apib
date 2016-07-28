@@ -17,7 +17,7 @@ The home page.
                 "providers": { "href": "/providers" },
                 "stages": { "href": "/stages" },
                 "categories": { "href": "/categories" },
-                "serviceUsers": { "href": "/service-users" },
+                "service-users": { "href": "/service-users" },
                 "issues": { "href": "/issues" }
             }
         }
@@ -98,7 +98,8 @@ The home page.
                             "self": { "href": "/categories/1" }
                         },
                         "id": 1,
-                        "name": "Education"
+                        "name": "Education",
+                        "position": 8
                     }
                 ],
                 "serviceUsers": [
@@ -126,14 +127,15 @@ The home page.
                         "name": "Gap in provision"
                     }
                 ]
-            }
+            },
+            "total": 8
         }
 
 ### Read a Service [GET]
 + Response 200 (application/hal+json)
 
     [Service][]
-    
+
 + Response 404 (application/vnd.error+json)
 
         {
@@ -142,14 +144,14 @@ The home page.
             },
             "message": "Service not found"
         }
-        
+
 ## Services Collection [/services]
 
 ### List All Services [GET]
 
 + Response 200 (application/hal+json)
     + Body
-    
+
             {
                 "_links": {
                     "self": { "href": "/services" }
@@ -161,10 +163,9 @@ The home page.
                                 "self": { "href": "/services/1" }
                             },
                             "id": 1,
-                            "name": "My Service",
-                            "description": "This is a service",
+                            "name": "School Induction (Individual Schools)",
+                            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse",
                             "dataMaintainer": "me",
-                            "endDate":"2018-01-01T00:00:00+0000",
                             "_embedded": {
                                 "providers": [
                                     {
@@ -210,6 +211,13 @@ The home page.
                                         },
                                         "id": 2,
                                         "name": "Awaiting Decision"
+                                    },
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/stages/6" }
+                                        },
+                                        "id": 6,
+                                        "name": "Gateway & Syrian resettlement programme"
                                     }
                                 ],
                                 "categories": [
@@ -218,7 +226,8 @@ The home page.
                                             "self": { "href": "/categories/1" }
                                         },
                                         "id": 1,
-                                        "name": "Education"
+                                        "name": "Education",
+                                        "position": 2
                                     }
                                 ],
                                 "serviceUsers": [
@@ -236,44 +245,19 @@ The home page.
                                         "id": 3,
                                         "name": "Children (under 18 years)"
                                     }
-                                ],
-                                "issues": [
-                                    {
-                                        "_links": {
-                                            "self": { "href": "/issues/2" }
-                                        },
-                                        "id": 2,
-                                        "name": "Gap in provision"
-                                    }
                                 ]
-                            }
+                            },
+                            "total": 8
                         },
                         {
                             "_links": {
                                 "self": { "href": "/services/2" }
                             },
                             "id": 2,
-                            "name": "Another Service",
-                            "description": "This is a another service",
+                            "name": "Notice letter to leave G4S accommodation - G4S",
+                            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse",
                             "dataMaintainer": "someone else",
-                            "endDate":"2018-01-01T00:00:00+0000",
                             "_embedded": {
-                                "providers": [
-                                    {
-                                        "_links": {
-                                            "self": { "href": "/providers/2" }
-                                        },
-                                        "id": 2,
-                                        "name": "Another provider",
-                                        "description": "This is another Provider",
-                                        "phone": "0114 11111111",
-                                        "email": "barry@example.com",
-                                        "website":"http://www.another-provider.example.com",
-                                        "contactName":"Barry Bdager",
-                                        "address": "Badger Tower",
-                                        "postcode": "S11 8QD"
-                                    }
-                                ],
                                 "stages": [
                                     {
                                         "_links": {
@@ -286,17 +270,11 @@ The home page.
                                 "categories": [
                                     {
                                         "_links": {
-                                            "self": { "href": "/categories/6" }
+                                            "self": { "href": "/categories/3" }
                                         },
-                                        "id": 6,
-                                        "name": "Social/community (including volunteering)"
-                                    },
-                                    {
-                                        "_links": {
-                                            "self": { "href": "/categories/7" }
-                                        },
-                                        "id": 7,
-                                        "name": "Resources (Clothes,food etc)"
+                                        "id": 3,
+                                        "name": "Housing",
+                                        "position": 2
                                     }
                                 ],
                                 "serviceUsers": [
@@ -317,13 +295,272 @@ The home page.
                                         "name": "Needs immediate action"
                                     }
                                 ]
-                            }
-                        }    
+                            },
+                            "total": 6
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/services/3" }
+                            },
+                            "id": 3,
+                            "name": "Registering for NHS Care (Mulberry Health Practice)",
+                            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse",
+                            "dataMaintainer": "me",
+                            "endDate": "2018-01-01T00:00:00+0000",
+                            "_embedded": {
+                                "providers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/providers/1" }
+                                        },
+                                        "id": 1,
+                                        "name": "A provider",
+                                        "description": "This is a Provider",
+                                        "phone": "0114 2222222",
+                                        "email": "jeff@example.com",
+                                        "website":"http://www.provider.example.com",
+                                        "contactName":"Jeff Bdager",
+                                        "address": "Badger House",
+                                        "postcode": "S1 2NS"
+                                    }
+                                ],
+                                "stages": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/stages/1" }
+                                        },
+                                        "id": 1,
+                                        "name": "Arrival"
+                                    }
+                                ],
+                                "categories": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/categories/2" }
+                                        },
+                                        "id": 2,
+                                        "name": "Health and social care",
+                                        "position": 2
+                                    }
+                                ],
+                                "serviceUsers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/service-users/2" }
+                                        },
+                                        "id": 2,
+                                        "name": "Families"
+                                    },
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/service-users/3" }
+                                        },
+                                        "id": 3,
+                                        "name": "Children (under 18 years)"
+                                    }
+                                ]
+                            },
+                            "total": 8
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/services/4" }
+                            },
+                            "id": 4,
+                            "name": "A finance service",
+                            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse",
+                            "dataMaintainer": "me",
+                            "endDate": "2018-01-01T00:00:00+0000",
+                            "_embedded": {
+                                "providers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/providers/1" }
+                                        },
+                                        "id": 1,
+                                        "name": "A provider",
+                                        "description": "This is a Provider",
+                                        "phone": "0114 2222222",
+                                        "email": "jeff@example.com",
+                                        "website":"http://www.provider.example.com",
+                                        "contactName":"Jeff Bdager",
+                                        "address": "Badger House",
+                                        "postcode": "S1 2NS"
+                                    }
+                                ],
+                                "stages": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/stages/4" }
+                                        },
+                                        "id": 4,
+                                        "name": "Negative Decision - Under Appeal"
+                                    }
+                                ],
+                                "categories": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/categories/4" }
+                                        },
+                                        "id": 4,
+                                        "name": "Finance (Personal)",
+                                        "position": 2
+                                    }
+                                ],
+                                "serviceUsers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/service-users/2" }
+                                        },
+                                        "id": 2,
+                                        "name": "Families"
+                                    }
+                                ]
+                            },
+                            "total": 8
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/services/5" }
+                            },
+                            "id": 5,
+                            "name": "Another finance service",
+                            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse",
+                            "dataMaintainer": "me",
+                            "endDate": "2018-01-01T00:00:00+0000",
+                            "_embedded": {
+                                "providers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/providers/1" }
+                                        },
+                                        "id": 1,
+                                        "name": "A provider",
+                                        "description": "This is a Provider",
+                                        "phone": "0114 2222222",
+                                        "email": "jeff@example.com",
+                                        "website":"http://www.provider.example.com",
+                                        "contactName":"Jeff Bdager",
+                                        "address": "Badger House",
+                                        "postcode": "S1 2NS"
+                                    }
+                                ],
+                                "stages": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/stages/4" }
+                                        },
+                                        "id": 4,
+                                        "name": "Negative Decision - Under Appeal"
+                                    }
+                                ],
+                                "categories": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/categories/4" }
+                                        },
+                                        "id": 4,
+                                        "name": "Finance (Personal)",
+                                        "position": 2
+                                    }
+                                ],
+                                "serviceUsers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/service-users/2" }
+                                        },
+                                        "id": 2,
+                                        "name": "Families"
+                                    }
+                                ]
+                            },
+                            "total": 8
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/services/6" }
+                            },
+                            "id": 6,
+                            "name": "Another service here",
+                            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse",
+                            "dataMaintainer": "me",
+                            "_embedded": {
+                                "stages": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/stages/5" }
+                                        },
+                                        "id": 5,
+                                        "name": "Negative Decision - Destitute"
+                                    }
+                                ],
+                                "categories": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/categories/5" }
+                                        },
+                                        "id": 5,
+                                        "name": "Asylum process and legal advice",
+                                        "position": 2
+                                    }
+                                ],
+                                "serviceUsers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/service-users/2" }
+                                        },
+                                        "id": 2,
+                                        "name": "Families"
+                                    }
+                                ]
+                            },
+                            "total": 8
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/services/7" }
+                            },
+                            "id": 7,
+                            "name": "Initial School Education Support (SCC)",
+                            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse",
+                            "dataMaintainer": "me",
+                            "_embedded": {
+                                "stages": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/stages/1" }
+                                        },
+                                        "id": 1,
+                                        "name": "Arrival"
+                                    }
+                                ],
+                                "categories": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/categories/1" }
+                                        },
+                                        "id": 1,
+                                        "name": "Education",
+                                        "position": 2
+                                    }
+                                ],
+                                "serviceUsers": [
+                                    {
+                                        "_links": {
+                                            "self": { "href": "/service-users/2" }
+                                        },
+                                        "id": 2,
+                                        "name": "Families"
+                                    }
+                                ]
+                            },
+                            "total": 8
+                        }
                     ]
                 },
                 "total": 2
             }
-            
+
 # Group Providers
 
 ## Provider [/providers/{id}]
@@ -352,7 +589,7 @@ The home page.
 + Response 200 (application/hal+json)
 
     [Provider][]
-    
+
 + Response 404 (application/vnd.error+json)
 
         {
@@ -361,14 +598,14 @@ The home page.
             },
             "message": "provider not found"
         }
-        
+
 ## Providers Collection [/providers]
 
 ### List All Providers [GET]
 
 + Response 200 (application/hal+json)
     + Body
-    
+
             {
                 "_links": {
                     "self": { "href": "/providers" }
@@ -406,8 +643,8 @@ The home page.
                     ]
                 },
                 "total": 2
-            } 
-            
+            }
+
 # Group Stages
 
 ## Stage [/stages/{id}]
@@ -429,7 +666,7 @@ The home page.
 + Response 200 (application/hal+json)
 
     [Stage][]
-    
+
 + Response 404 (application/vnd.error+json)
 
         {
@@ -438,14 +675,14 @@ The home page.
             },
             "message": "stage not found"
         }
-        
+
 ## Stages Collection [/stages]
 
 ### List All Stages [GET]
 
 + Response 200 (application/hal+json)
     + Body
-    
+
             {
                 "_links": {
                     "self": { "href": "/stages" }
@@ -492,13 +729,20 @@ The home page.
                                 "self": { "href": "/stages/6" }
                             },
                             "id": 6,
-                            "name": "Gateway Protection Programme"
+                            "name": "Gateway & Syrian resettlement programme"
+                        },
+                        {
+                            "_links": {
+                                "self": { "href": "/stages/7" }
+                            },
+                            "id": 7,
+                            "name": "Leave to remain / no recourse"
                         }
                     ]
                 },
-                "total": 6
-            }   
-            
+                "total": 7
+            }
+
 # Group Categories
 
 ## Category [/categories/{id}]
@@ -513,14 +757,15 @@ The home page.
                 "self": { "href": "/categories/1" }
             },
             "id": 1,
-            "name": "Education"
+            "name": "Education",
+            "position": 2
         }
 
 ### Read a Category [GET]
 + Response 200 (application/hal+json)
 
     [Category][]
-    
+
 + Response 404 (application/vnd.error+json)
 
         {
@@ -529,14 +774,14 @@ The home page.
             },
             "message": "category not found"
         }
-        
+
 ## Categories Collection [/categories]
 
 ### List All Categories [GET]
 
 + Response 200 (application/hal+json)
     + Body
-    
+
             {
                 "_links": {
                     "self": { "href": "/categories" }
@@ -548,55 +793,62 @@ The home page.
                                 "self": { "href": "/categories/1" }
                             },
                             "id": 1,
-                            "name": "Education"
+                            "name": "Education",
+                            "position": 2
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/2" }
                             },
                             "id": 2,
-                            "name": "Health and social care"
+                            "name": "Health and social care",
+                            "position": 1
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/3" }
                             },
                             "id": 3,
-                            "name": "Housing"
+                            "name": "Housing",
+                            "position": 3
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/4" }
                             },
                             "id": 4,
-                            "name": "Finance (Personal)"
+                            "name": "Finance (Personal)",
+                            "position": 4
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/5" }
                             },
                             "id": 5,
-                            "name": "Asylum process and legal advice"
+                            "name": "Asylum process and legal advice",
+                            "position": 5
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/6" }
                             },
                             "id": 6,
-                            "name": "Social/community (including volunteering)"
+                            "name": "Social/community (including volunteering)",
+                            "position": 6
                         },
                         {
                             "_links": {
                                 "self": { "href": "/categories/7" }
                             },
                             "id": 7,
-                            "name": "Resources (Clothes,food etc)"
+                            "name": "Resources (Clothes,food etc)",
+                            "position": 7
                         }
                     ]
                 },
                 "total": 7
-            }               
-            
+            }
+
 # Group Service Users
 
 ## ServiceUser [/service-users/{id}]
@@ -618,7 +870,7 @@ The home page.
 + Response 200 (application/hal+json)
 
     [ServiceUser][]
-    
+
 + Response 404 (application/vnd.error+json)
 
         {
@@ -627,20 +879,20 @@ The home page.
             },
             "message": "service user not found"
         }
-        
+
 ## ServiceUsers Collection [/service-users]
 
 ### List All ServiceUsers [GET]
 
 + Response 200 (application/hal+json)
     + Body
-    
+
             {
                 "_links": {
                     "self": { "href": "/service-users" }
                 },
                 "_embedded": {
-                    "serviceUsers": [
+                    "service-users": [
                         {
                             "_links": {
                                 "self": { "href": "/service-users/1" }
