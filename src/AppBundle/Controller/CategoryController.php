@@ -17,7 +17,7 @@ class CategoryController extends Controller
     public function listCategoriesAction()
     {
         $normalizer = $this->normalizer();
-        $categories = $this->getDoctrine()->getRepository("AppBundle:Category")->findAll();
+        $categories = $this->getDoctrine()->getRepository("AppBundle:Category")->findBy([], ['position' => 'ASC']);
 
         $hal = new Hal('/categories', ['total' => count($categories)]);
 
@@ -39,10 +39,12 @@ class CategoryController extends Controller
         $category = $this->getDoctrine()->getRepository("AppBundle:Category")->find($id);
 
         if (!$category) {
-            return new Response((new Hal(null, ['message' => 'Category not found']))->addLink(
-                'about',
-                '/categories/' . $id
-            )->asJson(true), 404, ['Content-Type' => 'application/vnd.error+json']);
+            return new Response(
+                (new Hal(null, ['message' => 'Category not found']))->addLink(
+                    'about',
+                    '/categories/' . $id
+                )->asJson(true), 404, ['Content-Type' => 'application/vnd.error+json']
+            );
         }
 
         return $this->halResponse(

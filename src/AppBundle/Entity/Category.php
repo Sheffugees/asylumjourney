@@ -22,6 +22,11 @@ class Category
      */
     private $name;
 
+    /**
+     * @ORM\Column(name="position", type="integer")
+     */
+    private $position;
+
     function __construct($name)
     {
         $this->name = $name;
@@ -47,5 +52,16 @@ class Category
     public function __toString() {
         return $this->name;
     }
+
+    public function getPosition()
+    {
+        return $this->position;
+    }
+
+    public function setPosition($position)
+    {
+        $this->position = $position;
+    }
+    
 }
 
