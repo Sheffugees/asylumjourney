@@ -4,6 +4,20 @@ security:
 
     role_hierarchy:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_EDITOR:
+            - ROLE_USER
+            - ROLE_ADMIN_SERVICE_EDIT
+            - ROLE_ADMIN_SERVICE_LIST
+            - ROLE_ADMIN_SERVICE_CREATE
+            - ROLE_ADMIN_SERVICE_VIEW
+            - ROLE_ADMIN_SERVICE_VIEW
+            - ROLE_ADMIN_SERVICE_DELETE
+            - ROLE_ADMIN_PROVIDER_EDIT
+            - ROLE_ADMIN_PROVIDER_LIST
+            - ROLE_ADMIN_PROVIDER_CREATE
+            - ROLE_ADMIN_PROVIDER_VIEW
+            - ROLE_ADMIN_PROVIDER_VIEW
+            - ROLE_ADMIN_PROVIDER_DELETE
 
     providers:
         fos_userbundle:
@@ -61,7 +75,7 @@ security:
         # Secured part of the site
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
-        - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        - { path: ^/admin/, role: [ROLE_EDITOR, ROLE_ADMIN, ROLE_SONATA_ADMIN] }
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
     acl:
         connection: default

@@ -116,3 +116,7 @@ nelmio_cors:
     paths:
       '^/':
         allow_origin: ['*']
+
+sonata_admin:
+    security:
+        handler: sonata.admin.security.handler.role
