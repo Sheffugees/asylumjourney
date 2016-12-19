@@ -29,6 +29,12 @@ class User extends BaseUser
      * @var int $id
      */
     protected $id;
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->enabled = true;
+    }
 
     /**
      * Get id
@@ -39,4 +45,5 @@ class User extends BaseUser
     {
         return $this->id;
     }
+
 }

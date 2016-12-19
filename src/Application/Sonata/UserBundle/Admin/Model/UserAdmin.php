@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Symfony\Component\Form\CallbackTransformer;
 
 class UserAdmin extends Admin
 {
@@ -113,21 +114,33 @@ class UserAdmin extends Admin
             $formMapper
                 ->with('Management')
                 ->add(
-                    'realRoles',
-                    'sonata_security_roles',
-                    array(
-                        'label' => 'form.label_roles',
+                    'roles',
+                    'choice',
+                    [
+                        'label' => 'User type',
+                        'choices' => [
+                            'Editor' => 'ROLE_EDITOR',
+                            'Admin' => 'ROLE_SUPER_ADMIN',
+                        ],
                         'expanded' => true,
-                        'multiple' => true,
-                        'required' => false
-                    )
+                        'multiple' => false,
+                        'choices_as_values' => true
+                    ]
                 )
-                ->add('locked', null, array('required' => false))
-                ->add('expired', null, array('required' => false))
-                ->add('enabled', null, array('required' => false))
-                ->add('credentialsExpired', null, array('required' => false))
                 ->end();
+
+            $formMapper->get('roles')
+                ->addModelTransformer(new CallbackTransformer(
+                    function ($rolesAsArray) {
+                        return isset($rolesAsArray[0]) ? $rolesAsArray[0]: '';
+                    },
+                    function ($role) {
+                        return [$role];
+                    }
+                ))
+            ;
         }
+
     }
 
     /**
