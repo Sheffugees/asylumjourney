@@ -57,9 +57,9 @@ class ProviderController extends Controller
     {
         $parametersAsArray = $this->parametersFromJson($request);
 
-        $name = $parametersAsArray['name']; //return error
+        $name = isset ($parametersAsArray['name']) ? $parametersAsArray['name'] : null;
         $description = isset ($parametersAsArray['description']) ? $parametersAsArray['description'] : null;
-        $phoneNumber = isset ($parametersAsArray['description']) ? $parametersAsArray['phoneNumber'] : null;
+        $phoneNumber = isset ($parametersAsArray['phoneNumber']) ? $parametersAsArray['phoneNumber'] : null;
         $email = isset ($parametersAsArray['email']) ? $parametersAsArray['email'] : null;
         $website = isset ($parametersAsArray['website']) ? $parametersAsArray['website'] : null;
         $contactName = isset ($parametersAsArray['contactName']) ? $parametersAsArray['contactName'] : null;
@@ -69,6 +69,13 @@ class ProviderController extends Controller
         $provider = new Provider(
             $name, $description, $phoneNumber, $email, $website, $contactName, $address, $postcode
         );
+
+        $errors = $this->get('validator')->validate($provider);
+
+        if (count($errors) > 0) {
+            return $this->validationErrorResponse($errors);
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($provider);
         $entityManager->flush();
@@ -93,7 +100,7 @@ class ProviderController extends Controller
 
         $parametersAsArray = $this->parametersFromJson($request);
 
-        $name = $parametersAsArray['name']; //return error
+        $name = isset ($parametersAsArray['name']) ? $parametersAsArray['name'] : null;
         $description = isset ($parametersAsArray['description']) ? $parametersAsArray['description'] : null;
         $phoneNumber = isset ($parametersAsArray['description']) ? $parametersAsArray['phoneNumber'] : null;
         $email = isset ($parametersAsArray['email']) ? $parametersAsArray['email'] : null;
@@ -110,6 +117,12 @@ class ProviderController extends Controller
         $provider->setContactName($contactName);
         $provider->setAddress($address);
         $provider->setPostcode($postcode);
+
+        $errors = $this->get('validator')->validate($provider);
+
+        if (count($errors) > 0) {
+            return $this->validationErrorResponse($errors);
+        }
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();;
@@ -183,6 +196,25 @@ class ProviderController extends Controller
                 'about',
                 '/providers/' . $id
             )->asJson(true), 404, ['Content-Type' => 'application/vnd.error+json']
+        );
+    }
+
+    /**
+     * @param $errors
+     * @return Response
+     */
+    private function validationErrorResponse($errors)
+    {
+        $messages = [];
+        foreach ($errors as $error) {
+            $messages[$error->getPropertyPath()] = $error->getMessage();
+        }
+
+        return new Response(
+            (new Hal(null, ['errors' => $messages]))->addLink(
+                'about',
+                '/providers'
+            )->asJson(true), 401, ['Content-Type' => 'application/vnd.error+json']
         );
     }
 }
