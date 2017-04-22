@@ -2,18 +2,28 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Category;
+use AppBundle\Entity\Issue;
+use AppBundle\Entity\Provider;
 use AppBundle\Entity\Service;
+use AppBundle\Entity\ServiceUser;
+use AppBundle\Entity\Stage;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Nocarrier\Hal;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class ServiceController extends Controller
 {
 
     /**
-     * @Route("/services", name="list_services")
+     * @Route("/services", name="list_services", methods={"GET"})
      */
     public function listServicesAction()
     {
@@ -43,7 +53,7 @@ class ServiceController extends Controller
     }
 
     /**
-     * @Route("/services/{id}", name="read_service")
+     * @Route("/services/{id}", name="read_service", methods={"GET"})
      */
     public function readServiceAction($id)
     {
@@ -57,6 +67,93 @@ class ServiceController extends Controller
         }
 
         return $this->halResponse($this->createServiceHal($service));
+    }
+
+    /**
+     * @Route("/services", name="create_service", methods={"POST"})
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function createServiceAction(Request $request): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $service = $this->transformRequestData($data);
+
+        $errors = $this->get('validator')->validate($service);
+
+        if (count($errors) > 0) {
+            return $this->validationErrorResponse($errors);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($service);
+        $em->flush();
+
+        return new Response(null, Response::HTTP_CREATED, [
+            'Content-Type' => 'application/json',
+            'Location' => "/services/{$service->getId()}",
+        ]);
+    }
+
+    private function transformRequestData(array $data): Service
+    {
+        $service = new Service(
+            $data['name'],
+            $data['description']
+        );
+
+        if (isset($data['dataMaintainer'])) {
+            $service->setDataMaintainer($data['dataMaintainer']);
+        }
+
+        if (isset($data['endDate'])) {
+            $service->setEndDate(new \DateTime($data['endDate']));
+        }
+
+        if (isset($data['hidden'])) {
+            $service->setHidden((bool) $data['hidden']);
+        }
+
+        if (isset($data['providers']) && is_array($data['providers'])) {
+            $service->setProviders($this->transformEntityCollectionFromIds($data['providers'], Provider::class));
+        }
+
+        if (isset($data['stages']) && is_array($data['stages'])) {
+            $service->setStages($this->transformEntityCollectionFromIds($data['stages'], Stage::class));
+        }
+
+        if (isset($data['categories']) && is_array($data['categories'])) {
+            $service->setCategories($this->transformEntityCollectionFromIds($data['categories'], Category::class));
+        }
+
+        if (isset($data['serviceUsers']) && is_array($data['serviceUsers'])) {
+            $service->setServiceUsers($this->transformEntityCollectionFromIds($data['serviceUsers'], ServiceUser::class));
+        }
+
+        if (isset($data['issues']) && is_array($data['issues'])) {
+            $service->setIssues($this->transformEntityCollectionFromIds($data['issues'], Issue::class));
+        }
+
+        return $service;
+    }
+
+    private function transformEntityCollectionFromIds(array $ids, string $class): Collection
+    {
+        $repository = $this->getDoctrine()->getManager()->getRepository($class);
+
+        return new ArrayCollection($repository->findBy(['id' => $ids]));
+    }
+
+    private function validationErrorResponse(ConstraintViolationListInterface $errors): JsonResponse
+    {
+        $messages = [];
+        foreach ($errors as $error) {
+            $messages[$error->getPropertyPath()] = $error->getMessage();
+        }
+
+        return new JsonResponse(['errors' => $messages], Response::HTTP_BAD_REQUEST);
     }
 
     private function getData(Service $service)
