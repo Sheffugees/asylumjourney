@@ -51,7 +51,7 @@ class ProviderController extends Controller
     }
 
     /**
-     * @Route("/providers/", name="create_provider", methods={"POST"})
+     * @Route("/providers", name="create_provider", methods={"POST"})
      */
     public function createProviderAction(Request $request)
     {
@@ -113,6 +113,27 @@ class ProviderController extends Controller
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();;
+
+        return new Response(
+            null,
+            Response::HTTP_NO_CONTENT
+        );
+    }
+
+    /**
+     * @Route("/providers/{id}", name="delete_provider", methods={"DELETE"})
+     */
+    public function deleteProviderAction($id)
+    {
+        $provider = $this->fetchProvider($id);
+
+        if (!$provider) {
+            return $this->notFoundResponse($id);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($provider);
+        $entityManager->flush();
 
         return new Response(
             null,
