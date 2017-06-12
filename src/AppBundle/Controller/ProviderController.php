@@ -55,6 +55,7 @@ class ProviderController extends Controller
      */
     public function createProviderAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
         $parametersAsArray = $this->parametersFromJson($request);
 
         $name = isset ($parametersAsArray['name']) ? $parametersAsArray['name'] : null;
@@ -92,6 +93,7 @@ class ProviderController extends Controller
      */
     public function editProviderAction(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
         $provider = $this->fetchProvider($id);
 
         if (!$provider) {
@@ -138,6 +140,7 @@ class ProviderController extends Controller
      */
     public function deleteProviderAction($id)
     {
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
         $provider = $this->fetchProvider($id);
 
         if (!$provider) {
