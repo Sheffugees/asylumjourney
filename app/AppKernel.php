@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new SimpleThings\EntityAudit\SimpleThingsEntityAuditBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Application\Sonata\UserBundle\ApplicationSonataUserBundle(),
+            new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             
         );
 

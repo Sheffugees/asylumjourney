@@ -3,7 +3,7 @@ security:
         FOS\UserBundle\Model\UserInterface: sha512
 
     role_hierarchy:
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_SONATA_ADMIN]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_SONATA_ADMIN, ROLE_EDITOR]
         ROLE_EDITOR:
             - ROLE_USER
             - ROLE_ADMIN_SERVICE_EDIT
@@ -45,21 +45,25 @@ security:
 
         # -> end custom configuration
 
-        # default login area for standard users
-
-        # This firewall is used to handle the public login area
-        # This part is handled by the FOS User Bundle
-        main:
-            pattern:             .*
-            context:             user
+        login:
+            pattern:  ^/api/login
+            stateless: true
+            anonymous: true
             form_login:
-                provider:       fos_userbundle
-                login_path:     /login
-                use_forward:    false
-                check_path:     /login_check
-                failure_path:   null
-            logout:             true
-            anonymous:          true
+                provider:                 fos_userbundle
+                check_path:               /api/login_check
+                username_parameter: username
+                password_parameter: password
+                success_handler:          lexik_jwt_authentication.handler.authentication_success
+                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
+                require_previous_session: false
+
+        api:
+            pattern:   .*
+            stateless: true
+            anonymous: true
+            lexik_jwt: ~
+
     access_control:
         # URL of FOSUserBundle which need to be available to anonymous users
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -76,6 +80,8 @@ security:
         # This config requires being logged for the whole site and having the admin role for the admin part.
         # Change these rules to adapt them to your needs
         - { path: ^/admin/, role: [ROLE_EDITOR, ROLE_ADMIN, ROLE_SONATA_ADMIN] }
+        - { path: ^/api/login, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/providers, role: [ROLE_EDITOR, ROLE_ADMIN, ROLE_SONATA_ADMIN], methods: [POST, PUT, DELETE] }
     acl:
         connection: default
