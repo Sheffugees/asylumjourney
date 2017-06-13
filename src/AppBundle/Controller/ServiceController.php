@@ -8,6 +8,7 @@ use AppBundle\Entity\Provider;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\ServiceUser;
 use AppBundle\Entity\Stage;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Nocarrier\Hal;
@@ -79,7 +80,7 @@ class ServiceController extends Controller
     {
         $data = json_decode($request->getContent(), true);
 
-        $service = $this->transformRequestData($data);
+        $service = $this->mapDataToService($data);
 
         $errors = $this->get('validator')->validate($service);
 
@@ -97,19 +98,63 @@ class ServiceController extends Controller
         ]);
     }
 
-    private function transformRequestData(array $data): Service
+    /**
+     * @Route("/services/{id}", name="edit_service", methods={"PUT"})
+     *
+     * @param int $id
+     * @param Request $request
+     * @return Response
+     */
+    public function editServiceAction(int $id, Request $request): Response
     {
-        $service = new Service(
-            $data['name'],
-            $data['description']
+        $data = json_decode($request->getContent(), true);
+        $service = $this->getDoctrine()->getRepository(Service::class)->find($id);
+
+        if (!$service) {
+            throw $this->createNotFoundException();
+        }
+
+        $service = $this->mapDataToService($data, $service);
+
+        $errors = $this->get('validator')->validate($service);
+
+        if (count($errors) > 0) {
+            return $this->validationErrorResponse($errors);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($service);
+        $em->flush();
+
+        return new Response(
+            null,
+            Response::HTTP_NO_CONTENT
         );
+    }
+
+    private function mapDataToService(array $data, Service $service = null): Service
+    {
+        if (!$service) {
+            $service = new Service(
+                $data['name'],
+                $data['description']
+            );
+        }
+
+        if (isset($data['name'])) {
+            $service->setName($data['name']);
+        }
+
+        if (isset($data['description'])) {
+            $service->setDescription($data['description']);
+        }
 
         if (isset($data['dataMaintainer'])) {
             $service->setDataMaintainer($data['dataMaintainer']);
         }
 
         if (isset($data['endDate'])) {
-            $service->setEndDate(new \DateTime($data['endDate']));
+            $service->setEndDate(new DateTime($data['endDate']));
         }
 
         if (isset($data['hidden'])) {
@@ -117,29 +162,29 @@ class ServiceController extends Controller
         }
 
         if (isset($data['providers']) && is_array($data['providers'])) {
-            $service->setProviders($this->transformEntityCollectionFromIds($data['providers'], Provider::class));
+            $service->setProviders($this->mapEntityCollectionFromIds($data['providers'], Provider::class));
         }
 
         if (isset($data['stages']) && is_array($data['stages'])) {
-            $service->setStages($this->transformEntityCollectionFromIds($data['stages'], Stage::class));
+            $service->setStages($this->mapEntityCollectionFromIds($data['stages'], Stage::class));
         }
 
         if (isset($data['categories']) && is_array($data['categories'])) {
-            $service->setCategories($this->transformEntityCollectionFromIds($data['categories'], Category::class));
+            $service->setCategories($this->mapEntityCollectionFromIds($data['categories'], Category::class));
         }
 
         if (isset($data['serviceUsers']) && is_array($data['serviceUsers'])) {
-            $service->setServiceUsers($this->transformEntityCollectionFromIds($data['serviceUsers'], ServiceUser::class));
+            $service->setServiceUsers($this->mapEntityCollectionFromIds($data['serviceUsers'], ServiceUser::class));
         }
 
         if (isset($data['issues']) && is_array($data['issues'])) {
-            $service->setIssues($this->transformEntityCollectionFromIds($data['issues'], Issue::class));
+            $service->setIssues($this->mapEntityCollectionFromIds($data['issues'], Issue::class));
         }
 
         return $service;
     }
 
-    private function transformEntityCollectionFromIds(array $ids, string $class): Collection
+    private function mapEntityCollectionFromIds(array $ids, string $class): Collection
     {
         $repository = $this->getDoctrine()->getManager()->getRepository($class);
 
