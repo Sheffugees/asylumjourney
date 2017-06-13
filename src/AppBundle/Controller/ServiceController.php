@@ -111,7 +111,7 @@ class ServiceController extends Controller
         $service = $this->getDoctrine()->getRepository(Service::class)->find($id);
 
         if (!$service) {
-            throw $this->createNotFoundException();
+            return $this->notFoundResponse($id);
         }
 
         $service = $this->mapDataToService($data, $service);
@@ -124,6 +124,30 @@ class ServiceController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($service);
+        $em->flush();
+
+        return new Response(
+            null,
+            Response::HTTP_NO_CONTENT
+        );
+    }
+
+    /**
+     * @Route("/services/{id}", name="delete_service", methods={"DELETE"})
+     *
+     * @param int $id
+     * @return Response
+     */
+    public function deleteServiceAction(int $id): Response
+    {
+        $service = $this->getDoctrine()->getRepository(Service::class)->find($id);
+
+        if (!$service) {
+            return $this->notFoundResponse($id);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($service);
         $em->flush();
 
         return new Response(
@@ -199,6 +223,20 @@ class ServiceController extends Controller
         }
 
         return new JsonResponse(['errors' => $messages], Response::HTTP_BAD_REQUEST);
+    }
+
+    /**
+     * @param $id
+     * @return Response
+     */
+    private function notFoundResponse(int $id): Response
+    {
+        return new Response(
+            (new Hal(null, ['message' => 'Service not found']))->addLink(
+                'about',
+                '/services/' . $id
+            )->asJson(true), 404, ['Content-Type' => 'application/vnd.error+json']
+        );
     }
 
     private function getData(Service $service)
