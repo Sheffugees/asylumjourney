@@ -58,6 +58,22 @@ php app/console doctrine:schema:create
 php app/console fos:user:create --super-admin
 ```
 
+The JWT based authentication requires keys generating for encryption purposes.
+
+This can be doe by running the following from the project root:
+
+```
+mkdir -p var/jwt 
+openssl genrsa -out var/jwt/private.pem -aes256 4096
+openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
+```
+
+If you set a passphrase then this need to be updates in `app/config/parameters.yml`:
+
+```
+    jwt_key_pass_phrase: "the pass phrase"
+```
+
 ## Running locally
 
 ```

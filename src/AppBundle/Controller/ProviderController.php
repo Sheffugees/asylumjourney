@@ -127,7 +127,7 @@ class ProviderController extends Controller
         }
 
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->flush();;
+        $entityManager->flush();
 
         return new Response(
             null,
