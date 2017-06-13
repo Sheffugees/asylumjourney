@@ -13,3 +13,4 @@
 node_modules/
 trello.json
 trello.csv
+var/jwt
