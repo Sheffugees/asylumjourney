@@ -2,8 +2,11 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="service", indexes={@ORM\Index(name="hidden_idx", columns={"hidden"})})
@@ -15,66 +18,88 @@ class Service
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="255")
+     * @var string
      */
     private $name;
 
     /**
      * @ORM\Column(name="hidden", type="boolean")
+     * @var bool
      */
-    private $hidden;
+    private $hidden = false;
 
     /**
      * @ORM\Column(name="description", type="text", nullable=true)
+     * @Assert\NotBlank()
+     * @var string
      */
     private $description;
 
     /**
      * @ORM\Column(name="maintainer", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
+     * @var string
      */
     private $dataMaintainer;
 
     /**
      * @ORM\Column(name="endDate", type="date", nullable=true)
+     * @Assert\Date()
+     * @var DateTime
      */
     private $endDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Provider")
+     * @var Collection
      */
     private $providers;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Stage")
+     * @var Collection
      */
     private $stages;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Category")
+     * @var Collection
      */
     private $categories;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\ServiceUser")
+     * @var Collection
      */
     private $serviceUsers;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Issue")
+     * @var Collection
      */
     private $issues;
 
-    function __construct($name, $description, $dataMaintainer, $endDate)
+    function __construct(string $name, string $description, string $dataMaintainer = null, DateTime $endDate = null)
     {
-        $this->dataMaintainer = $dataMaintainer;
-        $this->description = $description;
-        $this->endDate = $endDate;
         $this->name = $name;
-        $this->hidden = false;
+        $this->description = $description;
+
+        if ($dataMaintainer) {
+            $this->dataMaintainer = $dataMaintainer;
+        }
+
+        if ($endDate) {
+            $this->endDate = $endDate;
+        }
+
         $this->stages = new ArrayCollection();
         $this->providers = new ArrayCollection();
         $this->issues = new ArrayCollection();
@@ -82,7 +107,7 @@ class Service
         $this->categories = new ArrayCollection();
     }
 
-    public function setDataMaintainer($dataMaintainer)
+    public function setDataMaintainer(string $dataMaintainer)
     {
         $this->dataMaintainer = $dataMaintainer;
     }
@@ -92,7 +117,7 @@ class Service
         return $this->dataMaintainer;
     }
 
-    public function setDescription($description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
     }
@@ -102,7 +127,7 @@ class Service
         return $this->description;
     }
 
-    public function setEndDate($endDate)
+    public function setEndDate(DateTime $endDate)
     {
         $this->endDate = $endDate;
     }
@@ -112,9 +137,10 @@ class Service
         return $this->endDate;
     }
 
-    public function getISO8601EndDate() {
+    public function getISO8601EndDate()
+    {
         if ($this->endDate) {
-            return $this->endDate->format(\DateTime::ISO8601);
+            return $this->endDate->format(DateTime::ISO8601);
         }
         return null;
     }
@@ -124,7 +150,7 @@ class Service
         return $this->id;
     }
 
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -134,7 +160,7 @@ class Service
         return $this->name;
     }
 
-    public function setHidden($hidden)
+    public function setHidden(bool $hidden)
     {
         $this->hidden = $hidden;
     }
@@ -149,7 +175,7 @@ class Service
         return $this->stages;
     }
 
-    public function setStages($stages)
+    public function setStages(Collection $stages)
     {
         $this->stages = $stages;
     }
@@ -165,7 +191,7 @@ class Service
         $this->stages[] = $newStage;
     }
 
-    public function removeStage($stage)
+    public function removeStage(Stage $stage)
     {
         $this->stages->removeElement($stage);
     }
@@ -175,7 +201,7 @@ class Service
         return $this->name;
     }
 
-    public function setCategories($categories)
+    public function setCategories(Collection $categories)
     {
         $this->categories = $categories;
     }
@@ -190,12 +216,12 @@ class Service
         $this->categories[] = $category;
     }
 
-    public function removeCategory($category)
+    public function removeCategory(Category $category)
     {
         $this->categories->removeElement($category);
     }
 
-    public function setIssues($issues)
+    public function setIssues(Collection $issues)
     {
         $this->issues = $issues;
     }
@@ -210,12 +236,12 @@ class Service
         $this->issues[] = $issue;
     }
 
-    public function removeIssue($issue)
+    public function removeIssue(Issue $issue)
     {
         $this->issues->removeElement($issue);
     }
 
-    public function setServiceUsers($serviceUsers)
+    public function setServiceUsers(Collection $serviceUsers)
     {
         $this->serviceUsers = $serviceUsers;
     }
@@ -230,12 +256,12 @@ class Service
         $this->serviceUsers[] = $serviceUser;
     }
 
-    public function removeServiceUser($serviceUser)
+    public function removeServiceUser(ServiceUser $serviceUser)
     {
         $this->serviceUsers->removeElement($serviceUser);
     }
 
-    public function setProviders($providers)
+    public function setProviders(Collection $providers)
     {
         $this->providers = $providers;
     }
@@ -250,9 +276,9 @@ class Service
         $this->providers[] = $provider;
     }
 
-    public function removeProvider($provider)
+    public function removeProvider(Provider $provider)
     {
-        $this->$providers->removeElement($provider);
+        $this->providers->removeElement($provider);
     }
 }
 
