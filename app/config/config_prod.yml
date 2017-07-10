@@ -26,3 +26,6 @@ monolog:
             level: debug
         console:
             type:  console
+
+lexik_jwt_authentication:
+    encoder_service: 'asylum_journey.jwt.encoder'
