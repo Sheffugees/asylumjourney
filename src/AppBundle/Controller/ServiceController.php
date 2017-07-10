@@ -159,10 +159,9 @@ class ServiceController extends Controller
     private function mapDataToService(array $data, Service $service = null): Service
     {
         if (!$service) {
-            $service = new Service(
-                $data['name'],
-                $data['description']
-            );
+            $service = new Service();
+            $service->setName($data['name']);
+            $service->setDescription($data['description']);
         }
 
         if (isset($data['name'])) {

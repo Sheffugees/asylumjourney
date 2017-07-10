@@ -50,12 +50,11 @@ class FixturesCommand extends ContainerAwareCommand
             $connection->rollback();
         }
 
-        $service = new Service(
-            "My Service",
-            "This is a service",
-            "me",
-            new \DateTimeImmutable("2018-01-01T00:00:00+0000")
-        );
+        $service = new Service();
+        $service->setName("My Service");
+        $service->setDescription("This is a service");
+        $service->setDataMaintainer("me");
+        $service->setEndDate(new \DateTime("2018-01-01T00:00:00+0000"));
 
         $service->addCategory($manager->getRepository('AppBundle\\Entity\\Category')->find(1));
         $service->addStage($manager->getRepository('AppBundle\\Entity\\Stage')->find(1));
@@ -68,12 +67,11 @@ class FixturesCommand extends ContainerAwareCommand
 
         $manager->persist($service);
 
-        $service2 = new Service(
-            "Another Service",
-            "This is a another service",
-            "someone else",
-            new \DateTimeImmutable("2018-01-01T00:00:00+0000")
-        );
+        $service2 = new Service();
+        $service2->setName("Another Service");
+        $service2->setDescription("This is a another service");
+        $service2->setDataMaintainer("someone else");
+        $service2->setEndDate(new \DateTime("2018-01-01T00:00:00+0000"));
 
         $service2->addCategory($manager->getRepository('AppBundle\\Entity\\Category')->find(6));
         $service2->addCategory($manager->getRepository('AppBundle\\Entity\\Category')->find(7));
@@ -107,31 +105,29 @@ class FixturesCommand extends ContainerAwareCommand
             $connection->rollback();
         }
 
-        $manager->persist(
-            new Provider(
-                "A provider",
-                "This is a Provider",
-                "0114 2222222",
-                "jeff@example.com",
-                "http://www.provider.example.com",
-                "Jeff Bdager",
-                "Badger House",
-                "S1 2NS"
-            )
-        );
+        $provider = new Provider();
+        $provider->setName("A provider");
+        $provider->setDescription("This is a Provider");
+        $provider->setPhone("0114 2222222");
+        $provider->setEmail("jeff@example.com");
+        $provider->setWebsite("http://www.provider.example.com");
+        $provider->setContactName("Jeff Bdager");
+        $provider->setAddress("Badger House");
+        $provider->setPostcode("S1 2NS");
 
-        $manager->persist(
-            new Provider(
-                "Another provider",
-                "This is another Provider",
-                "0114 11111111",
-                "barry@example.com",
-                "http://www.another-provider.example.com",
-                "Barry Bdager",
-                "Badger Tower",
-                "S11 8QD"
-            )
-        );
+        $manager->persist($provider);
+
+        $provider = new Provider();
+        $provider->setName("Another provider");
+        $provider->setDescription("This is another Provider");
+        $provider->setPhone("0114 11111111");
+        $provider->setEmail("barry@example.com");
+        $provider->setWebsite("http://www.another-provider.example.com");
+        $provider->setContactName("Barry Bdager");
+        $provider->setAddress("Badger Tower");
+        $provider->setPostcode("S11 8QD");
+
+        $manager->persist($provider);
         $manager->flush();
     }
 }

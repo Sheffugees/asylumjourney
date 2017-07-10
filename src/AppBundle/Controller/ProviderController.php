@@ -67,9 +67,15 @@ class ProviderController extends Controller
         $address = isset ($parametersAsArray['address']) ? $parametersAsArray['address'] : null;
         $postcode = isset ($parametersAsArray['postcode']) ? $parametersAsArray['postcode'] : null;
 
-        $provider = new Provider(
-            $name, $description, $phoneNumber, $email, $website, $contactName, $address, $postcode
-        );
+        $provider = new Provider();
+        $provider->setName($name);
+        $provider->setDescription($description);
+        $provider->setPhone($phoneNumber);
+        $provider->setEmail($email);
+        $provider->setWebsite($website);
+        $provider->setContactName($contactName);
+        $provider->setAddress($address);
+        $provider->setPostcode($postcode);
 
         $errors = $this->get('validator')->validate($provider);
 

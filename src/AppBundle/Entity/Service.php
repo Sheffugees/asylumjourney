@@ -87,19 +87,8 @@ class Service
      */
     private $issues;
 
-    function __construct(string $name, string $description, string $dataMaintainer = null, DateTime $endDate = null)
+    public function __construct()
     {
-        $this->name = $name;
-        $this->description = $description;
-
-        if ($dataMaintainer) {
-            $this->dataMaintainer = $dataMaintainer;
-        }
-
-        if ($endDate) {
-            $this->endDate = $endDate;
-        }
-
         $this->stages = new ArrayCollection();
         $this->providers = new ArrayCollection();
         $this->issues = new ArrayCollection();
@@ -107,7 +96,7 @@ class Service
         $this->categories = new ArrayCollection();
     }
 
-    public function setDataMaintainer(string $dataMaintainer)
+    public function setDataMaintainer(?string $dataMaintainer)
     {
         $this->dataMaintainer = $dataMaintainer;
     }
@@ -117,7 +106,7 @@ class Service
         return $this->dataMaintainer;
     }
 
-    public function setDescription(string $description)
+    public function setDescription(?string $description)
     {
         $this->description = $description;
     }
@@ -127,7 +116,7 @@ class Service
         return $this->description;
     }
 
-    public function setEndDate(DateTime $endDate)
+    public function setEndDate(?DateTime $endDate)
     {
         $this->endDate = $endDate;
     }

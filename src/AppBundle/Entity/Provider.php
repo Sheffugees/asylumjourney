@@ -61,18 +61,6 @@ class Provider
      */
     private $address;
 
-    function __construct($name, $description = null, $phoneNumber = null, $email = null, $website = null, $contactName = null, $address = null, $postcode = null)
-    {
-        $this->address = $address;
-        $this->contactName = $contactName;
-        $this->description = $description;
-        $this->email = $email;
-        $this->name = $name;
-        $this->phone = $phoneNumber;
-        $this->postcode = $postcode;
-        $this->website = $website;
-    }
-
     public function setAddress($address)
     {
         $this->address = $address;

@@ -62,13 +62,17 @@ class CsvImportCommand extends ContainerAwareCommand
                 $providerName = $matches[2];
 
                 if(!isset($this->providers[$providerName])) {
-                    $provider = new Provider($providerName);
+                    $provider = new Provider();
+                    $provider->setName($providerName);
                     $manager->persist($provider);
                     $this->providers[$providerName] = $provider;
                 }
             }
 
-            $service = new Service($name, $row[3], null, null);
+            $service = new Service();
+            $service->setName($name);
+            $service->setDescription($row[3]);
+
             if(isset($providerName)) {
                 $service->addProvider($this->providers[$providerName]);
             }
