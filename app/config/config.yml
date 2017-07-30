@@ -35,9 +35,9 @@ framework:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-    form:
-        resources:
-          - 'SonataCoreBundle:Form:datepicker.html.twig'
+    #form:
+    #    resources:
+    #      - 'SonataCoreBundle:Form:datepicker.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -94,6 +94,9 @@ sonata_user:
 fos_user:
     db_driver:      orm
     firewall_name:  main
+    from_email:
+        address:        noreply@example.com
+        sender_name:    Demo App
     user_class:     Application\Sonata\UserBundle\Entity\User
 
     group:

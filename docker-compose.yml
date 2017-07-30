@@ -1,0 +1,26 @@
+web:
+    build: .
+    environment:
+        DEVELOPMENT_MODE: "true"
+        SYMFONY_ENV: dev
+    volumes:
+        - .:/app
+    links:
+        - database
+    expose:
+        - 80
+        - 443
+    ports:
+        - 8000:80
+        - 4430:443
+
+database:
+    image: mysql
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: journey
+        MYSQL_USER: journey
+        MYSQL_PASSWORD: journey
+    expose:
+        - 3306
+

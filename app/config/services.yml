@@ -42,4 +42,4 @@ services:
 
     asylum_journey.jwt.encoder:
         class: AppBundle\JWT\Encoder
-        arguments: [%asylum_journey.private_key%, %asylum_journey.public_key%, %asylum_journey.pass_phrase%]
+        arguments: [%jwt_private_key_path%, %jwt_public_key_path%, %jwt_key_pass_phrase%]

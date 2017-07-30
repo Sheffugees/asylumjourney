@@ -1,7 +1,8 @@
-FROM composer/composer:php5-alpine
-RUN docker-php-ext-install pdo_mysql
-WORKDIR /srv/asylumjourney
-EXPOSE 8000
-ENTRYPOINT []
-CMD ["sh"]
-VOLUME /srv/asylumjourney
+FROM quay.io/continuouspipe/symfony-php7.1-nginx:latest
+ARG GITHUB_TOKEN=
+ARG SYMFONY_ENV=dev
+ARG DEVELOPMENT_MODE=true
+
+COPY . /app/
+RUN container build
+
