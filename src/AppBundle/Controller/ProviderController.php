@@ -104,11 +104,11 @@ class ProviderController extends Controller
 
         $name = isset ($parametersAsArray['name']) ? $parametersAsArray['name'] : null;
         $description = isset ($parametersAsArray['description']) ? $parametersAsArray['description'] : null;
-        $phoneNumber = isset ($parametersAsArray['description']) ? $parametersAsArray['phoneNumber'] : null;
+        $phoneNumber = isset ($parametersAsArray['phone']) ? $parametersAsArray['phone'] : null;
         $email = isset ($parametersAsArray['email']) ? $parametersAsArray['email'] : null;
         $website = isset ($parametersAsArray['website']) ? $parametersAsArray['website'] : null;
         $contactName = isset ($parametersAsArray['contactName']) ? $parametersAsArray['contactName'] : null;
-        $address = isset ($parametersAsArray['addresss']) ? $parametersAsArray['addresss'] : null;
+        $address = isset ($parametersAsArray['address']) ? $parametersAsArray['address'] : null;
         $postcode = isset ($parametersAsArray['postcode']) ? $parametersAsArray['postcode'] : null;
 
         $provider->setName($name);
