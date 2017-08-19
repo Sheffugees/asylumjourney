@@ -86,6 +86,12 @@ class Service
      * @var Collection
      */
     private $issues;
+    
+    /**
+     * @ORM\Column(name="events", type="text", nullable=true)
+     * @var string
+     */
+    private $events;
 
     public function __construct()
     {
@@ -269,5 +275,16 @@ class Service
     {
         $this->providers->removeElement($provider);
     }
+
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    public function setEvents($events)
+    {
+        $this->events = $events;
+    }
+    
 }
 

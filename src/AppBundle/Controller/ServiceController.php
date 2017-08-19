@@ -184,6 +184,10 @@ class ServiceController extends Controller
             $service->setHidden((bool) $data['hidden']);
         }
 
+        if (isset($data['events'])) {
+            $service->setEvents($data['events']);
+        }
+
         if (isset($data['providers']) && is_array($data['providers'])) {
             $service->setProviders($this->mapEntityCollectionFromIds($data['providers'], Provider::class));
         }
@@ -245,7 +249,8 @@ class ServiceController extends Controller
             'name' => $service->getName(),
             'description' => $service->getDescription(),
             'dataMaintainer' => $service->getDataMaintainer(),
-            'endDate' => $service->getISO8601EndDate()
+            'endDate' => $service->getISO8601EndDate(),
+            'events' => $service->getEvents()
         ];
     }
 
