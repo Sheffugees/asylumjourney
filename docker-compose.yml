@@ -3,6 +3,8 @@ web:
     environment:
         DEVELOPMENT_MODE: "true"
         SYMFONY_ENV: dev
+        SYMFONY_WEB_APP_ENV_REWRITE: "true"
+        APP_ENDPOINT: "/app_dev.php"
     volumes:
         - .:/app
     links:

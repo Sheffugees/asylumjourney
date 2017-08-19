@@ -28,4 +28,5 @@ monolog:
             type:  console
 
 lexik_jwt_authentication:
-    encoder_service: 'asylum_journey.jwt.encoder'
+    encoder:
+        service: 'asylum_journey.jwt.encoder'
