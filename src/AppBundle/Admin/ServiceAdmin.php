@@ -17,6 +17,7 @@ class ServiceAdmin extends Admin
         $formMapper->add('description', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
         $formMapper->add('dataMaintainer', 'text', ['required' => false]);
         $formMapper->add('endDate', 'date', ['required' => false]);
+        $formMapper->add('events', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
         $formMapper->add('providers', 'sonata_type_model', ['multiple' => true, 'required' => false]);
         $formMapper->add('stages', 'sonata_type_model', ['multiple' => true]);
         $formMapper->add('categories', 'sonata_type_model', ['multiple' => true]);
