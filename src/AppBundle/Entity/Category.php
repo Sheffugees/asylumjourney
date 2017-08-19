@@ -25,7 +25,7 @@ class Category
     /**
      * @ORM\Column(name="position", type="integer")
      */
-    private $position;
+    private $position = 1;
 
     public function getId()
     {
@@ -45,7 +45,7 @@ class Category
     }
 
     public function __toString() {
-        return $this->name;
+        return $this->name ?: '';
     }
 
     public function getPosition()
