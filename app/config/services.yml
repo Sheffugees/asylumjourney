@@ -35,6 +35,11 @@ services:
         arguments: [~, AppBundle\Entity\ServiceUser, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: "Service User", group: "Journey" }
+    admin.resource_link:
+        class: AppBundle\Admin\ResourceLinkAdmin
+        arguments: [~, AppBundle\Entity\ResourceLink, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Resource, group: "Journey" }
 
     sonata.user.admin.group:
         abstract: true

@@ -93,6 +93,12 @@ class Service
      */
     private $events;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\ResourceLink", mappedBy="service", cascade={"all"})
+     * @var Collection
+     */
+    private $resources;
+
     public function __construct()
     {
         $this->stages = new ArrayCollection();
@@ -100,6 +106,7 @@ class Service
         $this->issues = new ArrayCollection();
         $this->serviceUsers = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->resources = new ArrayCollection();
     }
 
     public function setDataMaintainer(?string $dataMaintainer)
@@ -285,6 +292,38 @@ class Service
     {
         $this->events = $events;
     }
+
+    public function getResources()
+    {
+        return $this->resources;
+    }
+    
+    public function setResources(Collection $resources)
+    {
+        foreach ($resources as $resource) {
+            $resource->setService($this);
+        }
+
+        $this->resources = $resources;
+    }
+    
+    public function addResource(ResourceLink $newResource)
+    {
+        $newResource->setService($this);
+        foreach ($this->resources as $resource) {
+            if ($resource->getId() == $newResource->getId()) {
+                return;
+            }
+        }
+    
+        $this->resources[] = $newResource;
+    }
+    
+    public function removeResource(ResourceLink $resource)
+    {
+        $this->stages->removeElement($resource);
+    }
+
     
 }
 
