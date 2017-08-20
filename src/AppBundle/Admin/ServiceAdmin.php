@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\CoreBundle\Form\Type\CollectionType;
 
 class ServiceAdmin extends Admin
 {
@@ -23,8 +24,17 @@ class ServiceAdmin extends Admin
         $formMapper->add('categories', 'sonata_type_model', ['multiple' => true]);
         $formMapper->add('serviceUsers', 'sonata_type_model', ['multiple' => true]);
         $formMapper->add('issues', 'sonata_type_model', ['multiple' => true, 'required' => false]);
+        $formMapper->add('resources', 'sonata_type_model', ['multiple' => true, 'required' => false]);
+        $formMapper->add(
+            'resources',
+            CollectionType::class,
+            ['by_reference' => false],
+            [
+                'edit' => 'inline',
+                'inline' => 'table',
+            ]
+        );
     }
-
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -49,10 +59,12 @@ class ServiceAdmin extends Admin
             ->add('description')
             ->add('dataMaintainer')
             ->add('endDate')
+            ->add('events')
             ->add('providers')
             ->add('stages')
             ->add('categories')             
             ->add('serviceUsers')             
-            ->add('issues');              
+            ->add('issues')
+            ->add('resources');
     }
 }

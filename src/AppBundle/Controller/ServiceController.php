@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Issue;
 use AppBundle\Entity\Provider;
+use AppBundle\Entity\ResourceLink;
 use AppBundle\Entity\Service;
 use AppBundle\Entity\ServiceUser;
 use AppBundle\Entity\Stage;
@@ -250,7 +251,8 @@ class ServiceController extends Controller
             'description' => $service->getDescription(),
             'dataMaintainer' => $service->getDataMaintainer(),
             'endDate' => $service->getISO8601EndDate(),
-            'events' => $service->getEvents()
+            'events' => $service->getEvents(),
+            'resources' => array_map(function(ResourceLink $resource) {return ['name' => $resource->getName(), 'url' => $resource->getUrl()];},$service->getResources()->getValues())
         ];
     }
 

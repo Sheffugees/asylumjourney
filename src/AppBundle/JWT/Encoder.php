@@ -2,10 +2,10 @@
 
 namespace AppBundle\JWT;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoder;
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\DefaultEncoder;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
-class Encoder extends JWTEncoder implements JWTEncoderInterface 
+class Encoder extends DefaultEncoder implements JWTEncoderInterface 
 {
     /**
      * @return bool|resource
