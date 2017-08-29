@@ -161,8 +161,6 @@ class ServiceController extends Controller
     {
         if (!$service) {
             $service = new Service();
-            $service->setName($data['name']);
-            $service->setDescription($data['description']);
         }
 
         if (isset($data['name'])) {
