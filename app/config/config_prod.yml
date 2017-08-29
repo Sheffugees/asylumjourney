@@ -27,6 +27,7 @@ monolog:
         console:
             type:  console
 
-lexik_jwt_authentication:
-    encoder:
-        service: 'asylum_journey.jwt.encoder'
+services:
+    lexik_jwt_authentication.key_loader:
+        class: AppBundle\JWT\KeyLoader
+        arguments: [%jwt_private_key_path%, %jwt_public_key_path%, %jwt_key_pass_phrase%]

@@ -44,7 +44,3 @@ services:
     sonata.user.admin.group:
         abstract: true
         public: false
-
-    asylum_journey.jwt.encoder:
-        class: AppBundle\JWT\Encoder
-        arguments: [%jwt_private_key_path%, %jwt_public_key_path%, %jwt_key_pass_phrase%]
