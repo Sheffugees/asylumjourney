@@ -300,11 +300,16 @@ class Service
 
     public function setResources(Collection $resources)
     {
+        foreach ($this->resources as $existingResource) {
+            $existingResource->setService(null);
+        }
+
         $this->resources = new ArrayCollection(array_map(
             function (ResourceLink $resource) {
                 foreach ($this->resources as $existingResource) {
                     if ($existingResource->getName() == $resource->getName()) {
                         $existingResource->setUrl($resource->getUrl());
+                        $existingResource->setService($this);
 
                         return $existingResource;
                     }
@@ -332,7 +337,7 @@ class Service
 
     public function removeResource(ResourceLink $resource)
     {
-        $this->stages->removeElement($resource);
+        $this->resources->removeElement($resource);
     }
 
 }
