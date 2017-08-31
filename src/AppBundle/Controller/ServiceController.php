@@ -207,6 +207,22 @@ class ServiceController extends Controller
             $service->setIssues($this->mapEntityCollectionFromIds($data['issues'], Issue::class));
         }
 
+        if (isset($data['resources']) && is_array($data['resources'])) {
+            $service->setResources(new ArrayCollection(
+                array_map(
+                    function (array $resource) {
+                        return (new ResourceLink())->setName($resource['name'])->setUrl($resource['url']);
+                    },
+                    array_filter(
+                        $data['resources'],
+                        function (array $resource) {
+                            return isset($resource['name']) && isset($resource['url']);
+                        }
+                    )
+                )
+            ));
+        }
+
         return $service;
     }
 

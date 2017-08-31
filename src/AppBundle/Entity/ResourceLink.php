@@ -47,7 +47,7 @@ class ResourceLink
         return $this->id;
     }
 
-    public function setName(string $name)
+    public function setName(string $name): ResourceLink
     {
         $this->name = $name;
 
@@ -68,9 +68,11 @@ class ResourceLink
         return $this->url;
     }
 
-    public function setUrl(string $url)
+    public function setUrl(string $url): ResourceLink
     {
         $this->url = $url;
+
+        return $this;
     }
     
 }

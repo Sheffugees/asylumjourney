@@ -86,7 +86,7 @@ class Service
      * @var Collection
      */
     private $issues;
-    
+
     /**
      * @ORM\Column(name="events", type="text", nullable=true)
      * @var string
@@ -297,16 +297,27 @@ class Service
     {
         return $this->resources;
     }
-    
+
     public function setResources(Collection $resources)
     {
-        foreach ($resources as $resource) {
-            $resource->setService($this);
-        }
+        $this->resources = new ArrayCollection(array_map(
+            function (ResourceLink $resource) {
+                foreach ($this->resources as $existingResource) {
+                    if ($existingResource->getName() == $resource->getName()) {
+                        $existingResource->setUrl($resource->getUrl());
 
-        $this->resources = $resources;
+                        return $existingResource;
+                    }
+                }
+
+                $resource->setService($this);
+
+                return $resource;
+            },
+            $resources->getValues()
+        ));
     }
-    
+
     public function addResource(ResourceLink $newResource)
     {
         $newResource->setService($this);
@@ -315,15 +326,14 @@ class Service
                 return;
             }
         }
-    
+
         $this->resources[] = $newResource;
     }
-    
+
     public function removeResource(ResourceLink $resource)
     {
         $this->stages->removeElement($resource);
     }
 
-    
 }
 
