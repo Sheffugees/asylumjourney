@@ -24,6 +24,7 @@
         "php": ">=7.1",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
+        "gesdinet/jwt-refresh-token-bundle": "^0.2.1",
         "incenteev/composer-parameter-handler": "^2.0",
         "lexik/jwt-authentication-bundle": "^2.4",
         "nelmio/cors-bundle": "^1.5",
