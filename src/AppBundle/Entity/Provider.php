@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="provider")
@@ -19,6 +20,8 @@ class Provider
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=255)
      */
     private $name;
 
@@ -29,6 +32,7 @@ class Provider
 
     /**
      * @ORM\Column(name="$phoneNumber", type="string", length=255, nullable=true)
+     * @Assert\Length(max=255)
      */
     private $phone;
 
@@ -56,18 +60,6 @@ class Provider
      * @ORM\Column(name="address", type="text", nullable=true)
      */
     private $address;
-
-    function __construct($name, $description = null, $phoneNumber = null, $email = null, $website = null, $contactName = null, $address = null, $postcode = null)
-    {
-        $this->address = $address;
-        $this->contactName = $contactName;
-        $this->description = $description;
-        $this->email = $email;
-        $this->name = $name;
-        $this->phone = $phoneNumber;
-        $this->postcode = $postcode;
-        $this->website = $website;
-    }
 
     public function setAddress($address)
     {
@@ -156,7 +148,7 @@ class Provider
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?: '';
     }
 }
 

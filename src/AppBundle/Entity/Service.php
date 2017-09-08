@@ -2,8 +2,11 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="service", indexes={@ORM\Index(name="hidden_idx", columns={"hidden"})})
@@ -15,74 +18,98 @@ class Service
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @var int
      */
     private $id;
 
     /**
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(max="255")
+     * @var string
      */
     private $name;
 
     /**
      * @ORM\Column(name="hidden", type="boolean")
+     * @var bool
      */
-    private $hidden;
+    private $hidden = false;
 
     /**
      * @ORM\Column(name="description", type="text", nullable=true)
+     * @Assert\NotBlank()
+     * @var string
      */
     private $description;
 
     /**
      * @ORM\Column(name="maintainer", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
+     * @var string
      */
     private $dataMaintainer;
 
     /**
      * @ORM\Column(name="endDate", type="date", nullable=true)
+     * @Assert\Date()
+     * @var DateTime
      */
     private $endDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Provider")
+     * @var Collection
      */
     private $providers;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Stage")
+     * @var Collection
      */
     private $stages;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Category")
+     * @var Collection
      */
     private $categories;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\ServiceUser")
+     * @var Collection
      */
     private $serviceUsers;
 
     /**
      * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\Issue")
+     * @var Collection
      */
     private $issues;
 
-    function __construct($name, $description, $dataMaintainer, $endDate)
+    /**
+     * @ORM\Column(name="events", type="text", nullable=true)
+     * @var string
+     */
+    private $events;
+
+    /**
+     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\ResourceLink", mappedBy="service", cascade={"all"})
+     * @var Collection
+     */
+    private $resources;
+
+    public function __construct()
     {
-        $this->dataMaintainer = $dataMaintainer;
-        $this->description = $description;
-        $this->endDate = $endDate;
-        $this->name = $name;
-        $this->hidden = false;
         $this->stages = new ArrayCollection();
         $this->providers = new ArrayCollection();
         $this->issues = new ArrayCollection();
         $this->serviceUsers = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->resources = new ArrayCollection();
     }
 
-    public function setDataMaintainer($dataMaintainer)
+    public function setDataMaintainer(?string $dataMaintainer)
     {
         $this->dataMaintainer = $dataMaintainer;
     }
@@ -92,7 +119,7 @@ class Service
         return $this->dataMaintainer;
     }
 
-    public function setDescription($description)
+    public function setDescription(?string $description)
     {
         $this->description = $description;
     }
@@ -102,7 +129,7 @@ class Service
         return $this->description;
     }
 
-    public function setEndDate($endDate)
+    public function setEndDate(?DateTime $endDate)
     {
         $this->endDate = $endDate;
     }
@@ -112,9 +139,10 @@ class Service
         return $this->endDate;
     }
 
-    public function getISO8601EndDate() {
+    public function getISO8601EndDate()
+    {
         if ($this->endDate) {
-            return $this->endDate->format(\DateTime::ISO8601);
+            return $this->endDate->format(DateTime::ISO8601);
         }
         return null;
     }
@@ -124,7 +152,7 @@ class Service
         return $this->id;
     }
 
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -134,7 +162,7 @@ class Service
         return $this->name;
     }
 
-    public function setHidden($hidden)
+    public function setHidden(bool $hidden)
     {
         $this->hidden = $hidden;
     }
@@ -149,7 +177,7 @@ class Service
         return $this->stages;
     }
 
-    public function setStages($stages)
+    public function setStages(Collection $stages)
     {
         $this->stages = $stages;
     }
@@ -165,17 +193,17 @@ class Service
         $this->stages[] = $newStage;
     }
 
-    public function removeStage($stage)
+    public function removeStage(Stage $stage)
     {
         $this->stages->removeElement($stage);
     }
 
     public function __toString()
     {
-        return $this->name;
+        return $this->name ?: '';
     }
 
-    public function setCategories($categories)
+    public function setCategories(Collection $categories)
     {
         $this->categories = $categories;
     }
@@ -190,12 +218,12 @@ class Service
         $this->categories[] = $category;
     }
 
-    public function removeCategory($category)
+    public function removeCategory(Category $category)
     {
         $this->categories->removeElement($category);
     }
 
-    public function setIssues($issues)
+    public function setIssues(Collection $issues)
     {
         $this->issues = $issues;
     }
@@ -210,12 +238,12 @@ class Service
         $this->issues[] = $issue;
     }
 
-    public function removeIssue($issue)
+    public function removeIssue(Issue $issue)
     {
         $this->issues->removeElement($issue);
     }
 
-    public function setServiceUsers($serviceUsers)
+    public function setServiceUsers(Collection $serviceUsers)
     {
         $this->serviceUsers = $serviceUsers;
     }
@@ -230,12 +258,12 @@ class Service
         $this->serviceUsers[] = $serviceUser;
     }
 
-    public function removeServiceUser($serviceUser)
+    public function removeServiceUser(ServiceUser $serviceUser)
     {
         $this->serviceUsers->removeElement($serviceUser);
     }
 
-    public function setProviders($providers)
+    public function setProviders(Collection $providers)
     {
         $this->providers = $providers;
     }
@@ -250,9 +278,67 @@ class Service
         $this->providers[] = $provider;
     }
 
-    public function removeProvider($provider)
+    public function removeProvider(Provider $provider)
     {
-        $this->$providers->removeElement($provider);
+        $this->providers->removeElement($provider);
     }
+
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    public function setEvents($events)
+    {
+        $this->events = $events;
+    }
+
+    public function getResources()
+    {
+        return $this->resources;
+    }
+
+    public function setResources(Collection $resources)
+    {
+        foreach ($this->resources as $existingResource) {
+            $existingResource->setService(null);
+        }
+
+        $this->resources = new ArrayCollection(array_map(
+            function (ResourceLink $resource) {
+                foreach ($this->resources as $existingResource) {
+                    if ($existingResource->getName() == $resource->getName()) {
+                        $existingResource->setUrl($resource->getUrl());
+                        $existingResource->setService($this);
+
+                        return $existingResource;
+                    }
+                }
+
+                $resource->setService($this);
+
+                return $resource;
+            },
+            $resources->getValues()
+        ));
+    }
+
+    public function addResource(ResourceLink $newResource)
+    {
+        $newResource->setService($this);
+        foreach ($this->resources as $resource) {
+            if ($resource->getId() == $newResource->getId()) {
+                return;
+            }
+        }
+
+        $this->resources[] = $newResource;
+    }
+
+    public function removeResource(ResourceLink $resource)
+    {
+        $this->resources->removeElement($resource);
+    }
+
 }
 

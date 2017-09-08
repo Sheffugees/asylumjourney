@@ -26,11 +26,6 @@ class ServiceUser
      */
     private $name;
 
-    function __construct($name)
-    {
-        $this->name = $name;
-    }
-
     public function getId()
     {
         return $this->id;
@@ -49,7 +44,7 @@ class ServiceUser
     }
 
     public function __toString() {
-        return $this->name;
+        return $this->name ?: '';
     }
 }
 

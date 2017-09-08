@@ -5,10 +5,10 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="category")
+ * @ORM\Table(name="resource")
  * @ORM\Entity
  */
-class Category
+class ResourceLink
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -23,16 +23,31 @@ class Category
     private $name;
 
     /**
-     * @ORM\Column(name="position", type="integer")
+     * @ORM\Column(name="url", type="string", length=255)
      */
-    private $position = 1;
+    private $url;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Service", inversedBy="resources")
+     */
+    private $service;
+
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    public function setService(?Service $service)
+    {
+        $this->service = $service;
+    }
 
     public function getId()
     {
         return $this->id;
     }
 
-    public function setName($name)
+    public function setName(string $name): ResourceLink
     {
         $this->name = $name;
 
@@ -48,14 +63,16 @@ class Category
         return $this->name ?: '';
     }
 
-    public function getPosition()
+    public function getUrl()
     {
-        return $this->position;
+        return $this->url;
     }
 
-    public function setPosition($position)
+    public function setUrl(string $url): ResourceLink
     {
-        $this->position = $position;
+        $this->url = $url;
+
+        return $this;
     }
     
 }

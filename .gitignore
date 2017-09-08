@@ -13,3 +13,7 @@
 node_modules/
 trello.json
 trello.csv
+var/jwt
+
+!/web/app_dev.php
+.idea

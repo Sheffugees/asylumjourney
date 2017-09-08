@@ -22,11 +22,6 @@ class Stage
      */
     private $name;
 
-    function __construct($name)
-    {
-        $this->name = $name;
-    }
-
     public function getId()
     {
         return $this->id;
@@ -45,7 +40,7 @@ class Stage
     }
 
     public function __toString() {
-        return $this->name;
+        return $this->name ?: '';
     }
 }
 
