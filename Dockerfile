@@ -8,3 +8,4 @@ ARG APP_ENDPOINT=
 COPY . /app/
 RUN container build
 
+
