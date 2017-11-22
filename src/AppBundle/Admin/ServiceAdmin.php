@@ -34,6 +34,11 @@ class ServiceAdmin extends Admin
                 'inline' => 'table',
             ]
         );
+        $formMapper->add('lastReviewDate', 'date', ['required' => false]);
+        $formMapper->add('lastReviewedBy', 'text', ['required' => false]);
+        $formMapper->add('lastReviewComments', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
+        $formMapper->add('nextReviewDate', 'date', ['required' => false]);
+        $formMapper->add('nextReviewComments', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
     }
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
@@ -65,6 +70,11 @@ class ServiceAdmin extends Admin
             ->add('categories')             
             ->add('serviceUsers')             
             ->add('issues')
-            ->add('resources');
+            ->add('resources')
+            ->add('lastReviewDate')
+            ->add('lastReviewedBy')
+            ->add('lastReviewComments')
+            ->add('nextReviewComments')
+            ->add('nextReviewDate');
     }
 }

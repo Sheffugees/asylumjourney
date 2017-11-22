@@ -71,6 +71,39 @@ class Provider
      */
     private $address;
 
+    /**
+     * @ORM\Column(name="lastReviewDate", type="date", nullable=true)
+     * @Assert\Date()
+     * @var DateTime
+     */
+    private $lastReviewDate;
+
+    /**
+     * @ORM\Column(name="lastReviewedBy", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
+     * @var string
+     */
+    private $lastReviewedBy;
+
+    /**
+     * @ORM\Column(name="lastReviewComments", type="text", nullable=true)
+     * @var string
+     */
+    private $lastReviewComments;
+
+    /**
+     * @ORM\Column(name="nextReviewDate", type="date", nullable=true)
+     * @Assert\Date()
+     * @var DateTime
+     */
+    private $nextReviewDate;
+
+    /**
+     * @ORM\Column(name="nextReviewComments", type="text", nullable=true)
+     * @var string
+     */
+    private $nextReviewComments;
+
     public function setAddress($address)
     {
         $this->address = $address;
@@ -179,6 +212,72 @@ class Provider
     public function setTwitter($twitter)
     {
         $this->twitter = $twitter;
+    }
+
+    public function getLastReviewDate()
+    {
+        return $this->lastReviewDate;
+    }
+
+    public function setLastReviewDate($lastReviewDate)
+    {
+        $this->lastReviewDate = $lastReviewDate;
+    }
+
+    public function getLastReviewedBy()
+    {
+        return $this->lastReviewedBy;
+    }
+
+    public function setLastReviewedBy($lastReviewedBy)
+    {
+        $this->lastReviewedBy = $lastReviewedBy;
+    }
+
+    public function getLastReviewComments()
+    {
+        return $this->lastReviewComments;
+    }
+
+    public function setLastReviewComments($lastReviewComments)
+    {
+        $this->lastReviewComments = $lastReviewComments;
+    }
+
+    public function getNextReviewDate()
+    {
+        return $this->nextReviewDate;
+    }
+
+    public function setNextReviewDate($nextReviewDate)
+    {
+        $this->nextReviewDate = $nextReviewDate;
+    }
+
+    public function getNextReviewComments()
+    {
+        return $this->nextReviewComments;
+    }
+
+    public function setNextReviewComments($nextReviewComments)
+    {
+        $this->nextReviewComments = $nextReviewComments;
+    }
+
+    public function getISO8601LastReviewDate()
+    {
+        if ($this->lastReviewDate) {
+            return $this->lastReviewDate->format(\DateTime::ISO8601);
+        }
+        return null;
+    }
+
+    public function getISO8601NextReviewDate()
+    {
+        if ($this->nextReviewDate) {
+            return $this->nextReviewDate->format(\DateTime::ISO8601);
+        }
+        return null;
     }
 
 }
