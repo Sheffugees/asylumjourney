@@ -309,6 +309,7 @@ class Service
                 foreach ($this->resources as $existingResource) {
                     if ($existingResource->getName() == $resource->getName()) {
                         $existingResource->setUrl($resource->getUrl());
+                        $existingResource->setExpiryDate($resource->getExpiryDate());
                         $existingResource->setService($this);
 
                         return $existingResource;

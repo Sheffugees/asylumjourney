@@ -14,6 +14,7 @@ class ResourceLinkAdmin extends Admin
     {
         $formMapper->add('name', 'text');
         $formMapper->add('url', 'text');
+        $formMapper->add('expiryDate', 'date', ['required' => false]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -30,5 +31,6 @@ class ResourceLinkAdmin extends Admin
     {
         $showMapper->add('name');
         $showMapper->add('url');
+        $showMapper->add('expiryDate');
     }
 }
