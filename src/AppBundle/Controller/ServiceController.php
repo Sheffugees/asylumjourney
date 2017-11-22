@@ -266,6 +266,7 @@ class ServiceController extends Controller
             'dataMaintainer' => $service->getDataMaintainer(),
             'endDate' => $service->getISO8601EndDate(),
             'events' => $service->getEvents(),
+            'hidden' => $service->getHidden(),
             'resources' => array_map(function(ResourceLink $resource) {return ['name' => $resource->getName(), 'url' => $resource->getUrl()];},$service->getResources()->getValues())
         ];
     }
