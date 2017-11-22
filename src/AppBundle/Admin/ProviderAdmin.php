@@ -17,6 +17,8 @@ class ProviderAdmin extends Admin
         $formMapper->add('phone', 'text', ['required' => false]);
         $formMapper->add('email', 'text', ['required' => false]);
         $formMapper->add('website', 'text', ['required' => false]);
+        $formMapper->add('facebook', 'text', ['required' => false]);
+        $formMapper->add('twitter', 'text', ['required' => false]);
         $formMapper->add('contactName', 'text', ['required' => false]);
         $formMapper->add('address', 'textarea', ['required' => false]);
         $formMapper->add('postcode', 'text', ['required' => false]);
@@ -40,6 +42,8 @@ class ProviderAdmin extends Admin
             ->add('phone')
             ->add('email')
             ->add('website')
+            ->add('facebook')
+            ->add('twitter')
             ->add('contactName');
     }
 }

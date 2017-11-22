@@ -47,6 +47,16 @@ class Provider
     private $website;
 
     /**
+     * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
+     */
+    private $facebook;
+
+    /**
+     * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
+     */
+    private $twitter;
+
+    /**
      * @ORM\Column(name="contactName", type="string", length=255, nullable=true)
      */
     private $contactName;
@@ -150,5 +160,26 @@ class Provider
     {
         return $this->name ?: '';
     }
+
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+    }
+
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+    }
+
 }
 

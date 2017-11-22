@@ -63,6 +63,8 @@ class ProviderController extends Controller
         $phoneNumber = isset ($parametersAsArray['phone']) ? $parametersAsArray['phone'] : null;
         $email = isset ($parametersAsArray['email']) ? $parametersAsArray['email'] : null;
         $website = isset ($parametersAsArray['website']) ? $parametersAsArray['website'] : null;
+        $facebook = isset ($parametersAsArray['facebook']) ? $parametersAsArray['facebook'] : null;
+        $twitter = isset ($parametersAsArray['twitter']) ? $parametersAsArray['twitter'] : null;
         $contactName = isset ($parametersAsArray['contactName']) ? $parametersAsArray['contactName'] : null;
         $address = isset ($parametersAsArray['address']) ? $parametersAsArray['address'] : null;
         $postcode = isset ($parametersAsArray['postcode']) ? $parametersAsArray['postcode'] : null;
@@ -73,6 +75,8 @@ class ProviderController extends Controller
         $provider->setPhone($phoneNumber);
         $provider->setEmail($email);
         $provider->setWebsite($website);
+        $provider->setFacebook($facebook);
+        $provider->setTwitter($twitter);
         $provider->setContactName($contactName);
         $provider->setAddress($address);
         $provider->setPostcode($postcode);
@@ -113,6 +117,8 @@ class ProviderController extends Controller
         $phoneNumber = isset ($parametersAsArray['phone']) ? $parametersAsArray['phone'] : null;
         $email = isset ($parametersAsArray['email']) ? $parametersAsArray['email'] : null;
         $website = isset ($parametersAsArray['website']) ? $parametersAsArray['website'] : null;
+        $facebook = isset ($parametersAsArray['facebook']) ? $parametersAsArray['facebook'] : null;
+        $twitter = isset ($parametersAsArray['twitter']) ? $parametersAsArray['twitter'] : null;
         $contactName = isset ($parametersAsArray['contactName']) ? $parametersAsArray['contactName'] : null;
         $address = isset ($parametersAsArray['address']) ? $parametersAsArray['address'] : null;
         $postcode = isset ($parametersAsArray['postcode']) ? $parametersAsArray['postcode'] : null;
@@ -122,6 +128,8 @@ class ProviderController extends Controller
         $provider->setPhone($phoneNumber);
         $provider->setEmail($email);
         $provider->setWebsite($website);
+        $provider->setFacebook($facebook);
+        $provider->setTwitter($twitter);
         $provider->setContactName($contactName);
         $provider->setAddress($address);
         $provider->setPostcode($postcode);
