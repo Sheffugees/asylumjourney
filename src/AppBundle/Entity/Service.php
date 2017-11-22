@@ -310,6 +310,7 @@ class Service
                     if ($existingResource->getName() == $resource->getName()) {
                         $existingResource->setUrl($resource->getUrl());
                         $existingResource->setExpiryDate($resource->getExpiryDate());
+                        $existingResource->setComments($resource->getComments());
                         $existingResource->setService($this);
 
                         return $existingResource;

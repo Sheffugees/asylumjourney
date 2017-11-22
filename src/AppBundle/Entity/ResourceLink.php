@@ -41,6 +41,12 @@ class ResourceLink
      */
     private $service;
 
+    /**
+     * @ORM\Column(name="comments", type="text", nullable=true)
+     * @var string
+     */
+    private $comments;
+
     public function getService()
     {
         return $this->service;
@@ -100,6 +106,16 @@ class ResourceLink
             return $this->expiryDate->format(DateTime::ISO8601);
         }
         return null;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
     }
 
 }

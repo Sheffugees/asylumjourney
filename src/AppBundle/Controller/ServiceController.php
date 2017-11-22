@@ -211,9 +211,14 @@ class ServiceController extends Controller
             $service->setResources(new ArrayCollection(
                 array_map(
                     function (array $resource) {
-                        $resourceLink = (new ResourceLink())->setName($resource['name'])->setUrl($resource['url']);
+                        $resourceLink = (new ResourceLink())
+                            ->setName($resource['name'])
+                            ->setUrl($resource['url']);
                         if (isset($resource['expiryDate'])) {
                             $resourceLink->setExpiryDate($resource['expiryDate']);
+                        }
+                        if (isset($resource['comments'])) {
+                            $resourceLink->setComments($resource['comments']);
                         }
                         return $resourceLink;
                     },
@@ -271,7 +276,7 @@ class ServiceController extends Controller
             'endDate' => $service->getISO8601EndDate(),
             'events' => $service->getEvents(),
             'hidden' => $service->getHidden(),
-            'resources' => array_map(function(ResourceLink $resource) {return ['name' => $resource->getName(), 'url' => $resource->getUrl(), 'expiryDate' => $resource->getISO8601ExpiryDate()];},$service->getResources()->getValues())
+            'resources' => array_map(function(ResourceLink $resource) {return ['name' => $resource->getName(), 'url' => $resource->getUrl(), 'expiryDate' => $resource->getISO8601ExpiryDate(), 'comments' => $resource->getComments()];},$service->getResources()->getValues())
         ];
     }
 
