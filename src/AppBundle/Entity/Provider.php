@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -219,7 +220,7 @@ class Provider
         return $this->lastReviewDate;
     }
 
-    public function setLastReviewDate($lastReviewDate)
+    public function setLastReviewDate(?DateTime $lastReviewDate)
     {
         $this->lastReviewDate = $lastReviewDate;
     }
@@ -249,7 +250,7 @@ class Provider
         return $this->nextReviewDate;
     }
 
-    public function setNextReviewDate($nextReviewDate)
+    public function setNextReviewDate(?DateTime $nextReviewDate)
     {
         $this->nextReviewDate = $nextReviewDate;
     }

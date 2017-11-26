@@ -66,11 +66,11 @@ class ProviderController extends Controller
         $contactName = isset ($parametersAsArray['contactName']) ? $parametersAsArray['contactName'] : null;
         $address = isset ($parametersAsArray['address']) ? $parametersAsArray['address'] : null;
         $postcode = isset ($parametersAsArray['postcode']) ? $parametersAsArray['postcode'] : null;
-        $lastReviewDate = isset ($parametersAsArray['lastReviewDate']) ? $parametersAsArray['lastReviewDate'] : null;
+        $lastReviewDate = isset ($parametersAsArray['lastReviewDate']) ? new \DateTime($parametersAsArray['lastReviewDate']) : null;
         $lastReviewedBy = isset ($parametersAsArray['lastReviewedBy']) ? $parametersAsArray['lastReviewedBy'] : null;
         $lastReviewComments = isset ($parametersAsArray['lastReviewComments']) ? $parametersAsArray['lastReviewComments'] : null;
         $nextReviewComments = isset ($parametersAsArray['nextReviewComments']) ? $parametersAsArray['nextReviewComments'] : null;
-        $nextReviewDate = isset ($parametersAsArray['nextReviewDate']) ? $parametersAsArray['nextReviewDate'] : null;
+        $nextReviewDate = isset ($parametersAsArray['nextReviewDate']) ? new \DateTime($parametersAsArray['nextReviewDate']) : null;
 
         $provider = new Provider();
         $provider->setName($name);

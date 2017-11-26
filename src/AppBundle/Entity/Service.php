@@ -380,7 +380,7 @@ class Service
         return $this->lastReviewDate;
     }
 
-    public function setLastReviewDate($lastReviewDate)
+    public function setLastReviewDate(?DateTime $lastReviewDate)
     {
         $this->lastReviewDate = $lastReviewDate;
     }
@@ -400,7 +400,7 @@ class Service
         return $this->nextReviewDate;
     }
 
-    public function setNextReviewDate($nextReviewDate)
+    public function setNextReviewDate(?DateTime $nextReviewDate)
     {
         $this->nextReviewDate = $nextReviewDate;
     }
