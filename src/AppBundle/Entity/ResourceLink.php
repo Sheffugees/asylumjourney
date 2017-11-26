@@ -95,7 +95,7 @@ class ResourceLink
         return $this->expiryDate;
     }
 
-    public function setExpiryDate($expiryDate)
+    public function setExpiryDate(?DateTime $expiryDate)
     {
         $this->expiryDate = $expiryDate;
     }

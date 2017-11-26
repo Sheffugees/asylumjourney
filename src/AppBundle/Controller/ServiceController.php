@@ -235,7 +235,7 @@ class ServiceController extends Controller
                             ->setName($resource['name'])
                             ->setUrl($resource['url']);
                         if (isset($resource['expiryDate'])) {
-                            $resourceLink->setExpiryDate($resource['expiryDate']);
+                            $resourceLink->setExpiryDate(new DateTime($resource['expiryDate']));
                         }
                         if (isset($resource['comments'])) {
                             $resourceLink->setComments($resource['comments']);
