@@ -38,7 +38,6 @@ class ServiceController extends Controller
             LEFT JOIN s.categories c
             LEFT JOIN s.serviceUsers su
             LEFT JOIN s.issues i
-            WHERE s.hidden = 0
         ');
         $services = $query->getResult();
 
