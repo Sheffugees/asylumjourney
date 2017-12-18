@@ -38,7 +38,6 @@ class ServiceController extends Controller
             LEFT JOIN s.categories c
             LEFT JOIN s.serviceUsers su
             LEFT JOIN s.issues i
-            WHERE s.hidden = 0
         ');
         $services = $query->getResult();
 
@@ -187,6 +186,26 @@ class ServiceController extends Controller
             $service->setEvents($data['events']);
         }
 
+        if (isset($data['lastReviewDate'])) {
+            $service->setLastReviewDate(new DateTime($data['lastReviewDate']));
+        }
+
+        if (isset($data['nextReviewDate'])) {
+            $service->setNextReviewDate(new DateTime($data['nextReviewDate']));
+        }
+
+        if (isset($data['lastReviewedBy'])) {
+            $service->setLastReviewedBy($data['lastReviewedBy']);
+        }
+
+        if (isset($data['lastReviewComments'])) {
+            $service->setLastReviewComments($data['lastReviewComments']);
+        }
+
+        if (isset($data['nextReviewComments'])) {
+            $service->setNextReviewComments($data['nextReviewComments']);
+        }
+
         if (isset($data['providers']) && is_array($data['providers'])) {
             $service->setProviders($this->mapEntityCollectionFromIds($data['providers'], Provider::class));
         }
@@ -211,7 +230,16 @@ class ServiceController extends Controller
             $service->setResources(new ArrayCollection(
                 array_map(
                     function (array $resource) {
-                        return (new ResourceLink())->setName($resource['name'])->setUrl($resource['url']);
+                        $resourceLink = (new ResourceLink())
+                            ->setName($resource['name'])
+                            ->setUrl($resource['url']);
+                        if (isset($resource['expiryDate'])) {
+                            $resourceLink->setExpiryDate(new DateTime($resource['expiryDate']));
+                        }
+                        if (isset($resource['comments'])) {
+                            $resourceLink->setComments($resource['comments']);
+                        }
+                        return $resourceLink;
                     },
                     array_filter(
                         $data['resources'],
@@ -266,7 +294,13 @@ class ServiceController extends Controller
             'dataMaintainer' => $service->getDataMaintainer(),
             'endDate' => $service->getISO8601EndDate(),
             'events' => $service->getEvents(),
-            'resources' => array_map(function(ResourceLink $resource) {return ['name' => $resource->getName(), 'url' => $resource->getUrl()];},$service->getResources()->getValues())
+            'hidden' => $service->getHidden(),
+            'lastReviewDate' => $service->getISO8601LastReviewDate(),
+            'lastReviewedBy' => $service->getLastReviewedBy(),
+            'lastReviewComments' => $service->getLastReviewComments(),
+            'nextReviewDate' => $service->getISO8601NextReviewDate(),
+            'nextReviewComments' => $service->getNextReviewComments(),
+            'resources' => array_map(function(ResourceLink $resource) {return ['name' => $resource->getName(), 'url' => $resource->getUrl(), 'expiryDate' => $resource->getISO8601ExpiryDate(), 'comments' => $resource->getComments()];},$service->getResources()->getValues())
         ];
     }
 
@@ -284,7 +318,7 @@ class ServiceController extends Controller
         foreach ($service->getProviders() as $provider) {
             $hal->addResource(
                 'providers',
-                (new Hal('/providers/' . $provider->getId()))->setData($normalizer->normalize($provider))
+                (new Hal('/providers/' . $provider->getId()))->setData($this->getProviderData($provider))
             );
         }
 
@@ -322,5 +356,27 @@ class ServiceController extends Controller
     private function normalizer()
     {
         return (new GetSetMethodNormalizer());
+    }
+
+    private function getProviderData(Provider $provider)
+    {
+        return [
+            'id' => $provider->getId(),
+            'name' => $provider->getName(),
+            'description' => $provider->getDescription(),
+            'phone' => $provider->getPhone(),
+            'email' => $provider->getEmail(),
+            'website' => $provider->getWebsite(),
+            'facebook' => $provider->getFacebook(),
+            'twitter' => $provider->getTwitter(),
+            'contactName' => $provider->getContactName(),
+            'postcode' => $provider->getPostcode(),
+            'address' => $provider->getAddress(),
+            'lastReviewDate' => $provider->getISO8601LastReviewDate(),
+            'lastReviewedBy' => $provider->getLastReviewedBy(),
+            'lastReviewComments' => $provider->getLastReviewComments(),
+            'nextReviewDate' => $provider->getISO8601NextReviewDate(),
+            'nextReviewComments' => $provider->getNextReviewComments(),
+        ];
     }
 }

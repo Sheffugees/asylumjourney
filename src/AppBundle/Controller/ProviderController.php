@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 
 class ProviderController extends Controller
 {
@@ -18,7 +17,6 @@ class ProviderController extends Controller
      */
     public function listProvidersAction()
     {
-        $normalizer = $this->normalizer();
         $providers = $this->getDoctrine()->getRepository("AppBundle:Provider")->findAll();
 
         $hal = new Hal('/providers', ['total' => count($providers)]);
@@ -26,7 +24,7 @@ class ProviderController extends Controller
         foreach ($providers as $provider) {
             $hal->addResource(
                 'providers',
-                (new Hal('/providers/' . $provider->getId()))->setData($normalizer->normalize($provider))
+                (new Hal('/providers/' . $provider->getId()))->setData($this->getData($provider))
             );
         }
 
@@ -46,7 +44,7 @@ class ProviderController extends Controller
 
         return $this->halResponse(
             (new Hal('/providers/' . $provider->getId()))
-                ->setData($this->normalizer()->normalize($provider))
+                ->setData($this->getData($provider))
         );
     }
 
@@ -63,9 +61,16 @@ class ProviderController extends Controller
         $phoneNumber = isset ($parametersAsArray['phone']) ? $parametersAsArray['phone'] : null;
         $email = isset ($parametersAsArray['email']) ? $parametersAsArray['email'] : null;
         $website = isset ($parametersAsArray['website']) ? $parametersAsArray['website'] : null;
+        $facebook = isset ($parametersAsArray['facebook']) ? $parametersAsArray['facebook'] : null;
+        $twitter = isset ($parametersAsArray['twitter']) ? $parametersAsArray['twitter'] : null;
         $contactName = isset ($parametersAsArray['contactName']) ? $parametersAsArray['contactName'] : null;
         $address = isset ($parametersAsArray['address']) ? $parametersAsArray['address'] : null;
         $postcode = isset ($parametersAsArray['postcode']) ? $parametersAsArray['postcode'] : null;
+        $lastReviewDate = isset ($parametersAsArray['lastReviewDate']) ? new \DateTime($parametersAsArray['lastReviewDate']) : null;
+        $lastReviewedBy = isset ($parametersAsArray['lastReviewedBy']) ? $parametersAsArray['lastReviewedBy'] : null;
+        $lastReviewComments = isset ($parametersAsArray['lastReviewComments']) ? $parametersAsArray['lastReviewComments'] : null;
+        $nextReviewComments = isset ($parametersAsArray['nextReviewComments']) ? $parametersAsArray['nextReviewComments'] : null;
+        $nextReviewDate = isset ($parametersAsArray['nextReviewDate']) ? new \DateTime($parametersAsArray['nextReviewDate']) : null;
 
         $provider = new Provider();
         $provider->setName($name);
@@ -73,9 +78,16 @@ class ProviderController extends Controller
         $provider->setPhone($phoneNumber);
         $provider->setEmail($email);
         $provider->setWebsite($website);
+        $provider->setFacebook($facebook);
+        $provider->setTwitter($twitter);
         $provider->setContactName($contactName);
         $provider->setAddress($address);
         $provider->setPostcode($postcode);
+        $provider->setLastReviewDate($lastReviewDate);
+        $provider->setLastReviewedBy($lastReviewedBy);
+        $provider->setLastReviewComments($lastReviewComments);
+        $provider->setNextReviewDate($nextReviewDate);
+        $provider->setNextReviewComments($nextReviewComments);
 
         $errors = $this->get('validator')->validate($provider);
 
@@ -113,18 +125,32 @@ class ProviderController extends Controller
         $phoneNumber = isset ($parametersAsArray['phone']) ? $parametersAsArray['phone'] : null;
         $email = isset ($parametersAsArray['email']) ? $parametersAsArray['email'] : null;
         $website = isset ($parametersAsArray['website']) ? $parametersAsArray['website'] : null;
+        $facebook = isset ($parametersAsArray['facebook']) ? $parametersAsArray['facebook'] : null;
+        $twitter = isset ($parametersAsArray['twitter']) ? $parametersAsArray['twitter'] : null;
         $contactName = isset ($parametersAsArray['contactName']) ? $parametersAsArray['contactName'] : null;
         $address = isset ($parametersAsArray['address']) ? $parametersAsArray['address'] : null;
         $postcode = isset ($parametersAsArray['postcode']) ? $parametersAsArray['postcode'] : null;
+        $lastReviewDate = isset ($parametersAsArray['lastReviewDate']) ? new \DateTime($parametersAsArray['lastReviewDate']) : null;
+        $lastReviewedBy = isset ($parametersAsArray['lastReviewedBy']) ? $parametersAsArray['lastReviewedBy'] : null;
+        $lastReviewComments = isset ($parametersAsArray['lastReviewComments']) ? $parametersAsArray['lastReviewComments'] : null;
+        $nextReviewComments = isset ($parametersAsArray['nextReviewComments']) ? $parametersAsArray['nextReviewComments'] : null;
+        $nextReviewDate = isset ($parametersAsArray['nextReviewDate']) ? new \DateTime($parametersAsArray['nextReviewDate']) : null;
 
         $provider->setName($name);
         $provider->setDescription($description);
         $provider->setPhone($phoneNumber);
         $provider->setEmail($email);
         $provider->setWebsite($website);
+        $provider->setFacebook($facebook);
+        $provider->setTwitter($twitter);
         $provider->setContactName($contactName);
         $provider->setAddress($address);
         $provider->setPostcode($postcode);
+        $provider->setLastReviewDate($lastReviewDate);
+        $provider->setLastReviewedBy($lastReviewedBy);
+        $provider->setLastReviewComments($lastReviewComments);
+        $provider->setNextReviewDate($nextReviewDate);
+        $provider->setNextReviewComments($nextReviewComments);
 
         $errors = $this->get('validator')->validate($provider);
 
@@ -161,11 +187,6 @@ class ProviderController extends Controller
             null,
             Response::HTTP_NO_CONTENT
         );
-    }
-
-    private function normalizer()
-    {
-        return (new GetSetMethodNormalizer());
     }
 
     private function halResponse(Hal $resource)
@@ -225,5 +246,27 @@ class ProviderController extends Controller
                 '/providers'
             )->asJson(true), 401, ['Content-Type' => 'application/vnd.error+json']
         );
+    }
+
+    private function getData(Provider $provider)
+    {
+        return [
+            'id' => $provider->getId(),
+            'name' => $provider->getName(),
+            'description' => $provider->getDescription(),
+            'phone' => $provider->getPhone(),
+            'email' => $provider->getEmail(),
+            'website' => $provider->getWebsite(),
+            'facebook' => $provider->getFacebook(),
+            'twitter' => $provider->getTwitter(),
+            'contactName' => $provider->getContactName(),
+            'postcode' => $provider->getPostcode(),
+            'address' => $provider->getAddress(),
+            'lastReviewDate' => $provider->getISO8601LastReviewDate(),
+            'lastReviewedBy' => $provider->getLastReviewedBy(),
+            'lastReviewComments' => $provider->getLastReviewComments(),
+            'nextReviewDate' => $provider->getISO8601NextReviewDate(),
+            'nextReviewComments' => $provider->getNextReviewComments(),
+        ];
     }
 }

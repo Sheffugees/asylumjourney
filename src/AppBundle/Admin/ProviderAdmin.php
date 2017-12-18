@@ -17,9 +17,16 @@ class ProviderAdmin extends Admin
         $formMapper->add('phone', 'text', ['required' => false]);
         $formMapper->add('email', 'text', ['required' => false]);
         $formMapper->add('website', 'text', ['required' => false]);
+        $formMapper->add('facebook', 'text', ['required' => false]);
+        $formMapper->add('twitter', 'text', ['required' => false]);
         $formMapper->add('contactName', 'text', ['required' => false]);
         $formMapper->add('address', 'textarea', ['required' => false]);
         $formMapper->add('postcode', 'text', ['required' => false]);
+        $formMapper->add('lastReviewDate', 'date', ['required' => false]);
+        $formMapper->add('lastReviewedBy', 'text', ['required' => false]);
+        $formMapper->add('lastReviewComments', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
+        $formMapper->add('nextReviewDate', 'date', ['required' => false]);
+        $formMapper->add('nextReviewComments', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -40,6 +47,13 @@ class ProviderAdmin extends Admin
             ->add('phone')
             ->add('email')
             ->add('website')
-            ->add('contactName');
+            ->add('facebook')
+            ->add('twitter')
+            ->add('contactName')
+            ->add('lastReviewDate')
+            ->add('lastReviewedBy')
+            ->add('lastReviewComments')
+            ->add('nextReviewComments')
+            ->add('nextReviewDate');
     }
 }

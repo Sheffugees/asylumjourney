@@ -55,7 +55,6 @@ class UserAdmin extends Admin
             ->addIdentifier('username')
             ->add('email')
             ->add('enabled', null, array('editable' => true))
-            ->add('locked', null, array('editable' => true))
             ->add('createdAt');
 
         if ($this->isGranted('ROLE_ALLOWED_TO_SWITCH')) {
@@ -76,7 +75,6 @@ class UserAdmin extends Admin
         $filterMapper
             ->add('id')
             ->add('username')
-            ->add('locked')
             ->add('email');
     }
 

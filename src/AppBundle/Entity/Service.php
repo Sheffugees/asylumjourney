@@ -99,6 +99,39 @@ class Service
      */
     private $resources;
 
+    /**
+     * @ORM\Column(name="lastReviewDate", type="date", nullable=true)
+     * @Assert\Date()
+     * @var DateTime
+     */
+    private $lastReviewDate;
+
+    /**
+     * @ORM\Column(name="lastReviewedBy", type="string", length=255, nullable=true)
+     * @Assert\Length(max="255")
+     * @var string
+     */
+    private $lastReviewedBy;
+
+    /**
+     * @ORM\Column(name="lastReviewComments", type="text", nullable=true)
+     * @var string
+     */
+    private $lastReviewComments;
+
+    /**
+     * @ORM\Column(name="nextReviewDate", type="date", nullable=true)
+     * @Assert\Date()
+     * @var DateTime
+     */
+    private $nextReviewDate;
+
+    /**
+     * @ORM\Column(name="nextReviewComments", type="text", nullable=true)
+     * @var string
+     */
+    private $nextReviewComments;
+
     public function __construct()
     {
         $this->stages = new ArrayCollection();
@@ -309,6 +342,8 @@ class Service
                 foreach ($this->resources as $existingResource) {
                     if ($existingResource->getName() == $resource->getName()) {
                         $existingResource->setUrl($resource->getUrl());
+                        $existingResource->setExpiryDate($resource->getExpiryDate());
+                        $existingResource->setComments($resource->getComments());
                         $existingResource->setService($this);
 
                         return $existingResource;
@@ -338,6 +373,72 @@ class Service
     public function removeResource(ResourceLink $resource)
     {
         $this->resources->removeElement($resource);
+    }
+
+    public function getLastReviewDate()
+    {
+        return $this->lastReviewDate;
+    }
+
+    public function setLastReviewDate(?DateTime $lastReviewDate)
+    {
+        $this->lastReviewDate = $lastReviewDate;
+    }
+
+    public function getLastReviewedBy()
+    {
+        return $this->lastReviewedBy;
+    }
+
+    public function setLastReviewedBy($lastReviewedBy)
+    {
+        $this->lastReviewedBy = $lastReviewedBy;
+    }
+
+    public function getNextReviewDate()
+    {
+        return $this->nextReviewDate;
+    }
+
+    public function setNextReviewDate(?DateTime $nextReviewDate)
+    {
+        $this->nextReviewDate = $nextReviewDate;
+    }
+
+    public function getLastReviewComments()
+    {
+        return $this->lastReviewComments;
+    }
+
+    public function setLastReviewComments($lastReviewComments)
+    {
+        $this->lastReviewComments = $lastReviewComments;
+    }
+
+    public function getNextReviewComments()
+    {
+        return $this->nextReviewComments;
+    }
+
+    public function setNextReviewComments($nextReviewComments)
+    {
+        $this->nextReviewComments = $nextReviewComments;
+    }
+
+    public function getISO8601LastReviewDate()
+    {
+        if ($this->lastReviewDate) {
+            return $this->lastReviewDate->format(DateTime::ISO8601);
+        }
+        return null;
+    }
+
+    public function getISO8601NextReviewDate()
+    {
+        if ($this->nextReviewDate) {
+            return $this->nextReviewDate->format(DateTime::ISO8601);
+        }
+        return null;
     }
 
 }

@@ -2,7 +2,9 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="resource")
@@ -28,9 +30,22 @@ class ResourceLink
     private $url;
 
     /**
+     * @ORM\Column(name="expiryDate", type="date", nullable=true)
+     * @Assert\Date()
+     * @var DateTime
+     */
+    private $expiryDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Service", inversedBy="resources")
      */
     private $service;
+
+    /**
+     * @ORM\Column(name="comments", type="text", nullable=true)
+     * @var string
+     */
+    private $comments;
 
     public function getService()
     {
@@ -74,6 +89,34 @@ class ResourceLink
 
         return $this;
     }
-    
+
+    public function getExpiryDate()
+    {
+        return $this->expiryDate;
+    }
+
+    public function setExpiryDate(?DateTime $expiryDate)
+    {
+        $this->expiryDate = $expiryDate;
+    }
+
+    public function getISO8601ExpiryDate()
+    {
+        if ($this->expiryDate) {
+            return $this->expiryDate->format(DateTime::ISO8601);
+        }
+        return null;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
+    }
+
 }
 
