@@ -2,14 +2,13 @@
 
 namespace AppBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\CoreBundle\Form\Type\CollectionType;
 
-class ServiceAdmin extends Admin
+class ServiceAdmin extends ShortDateAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -40,6 +39,7 @@ class ServiceAdmin extends Admin
         $formMapper->add('nextReviewDate', 'date', ['required' => false]);
         $formMapper->add('nextReviewComments', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
     }
+
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -67,8 +67,8 @@ class ServiceAdmin extends Admin
             ->add('events')
             ->add('providers')
             ->add('stages')
-            ->add('categories')             
-            ->add('serviceUsers')             
+            ->add('categories')
+            ->add('serviceUsers')
             ->add('issues')
             ->add('resources')
             ->add('lastReviewDate')

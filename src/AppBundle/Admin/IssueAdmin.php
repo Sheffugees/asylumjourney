@@ -2,13 +2,12 @@
 
 namespace AppBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class IssueAdmin extends Admin
+class IssueAdmin extends ShortDateAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {

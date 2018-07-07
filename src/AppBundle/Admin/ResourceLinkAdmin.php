@@ -2,13 +2,12 @@
 
 namespace AppBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class ResourceLinkAdmin extends Admin
+class ResourceLinkAdmin extends ShortDateAdmin
 {
     protected function configureFormFields(FormMapper $formMapper)
     {
@@ -37,14 +36,4 @@ class ResourceLinkAdmin extends Admin
         $showMapper->add('expiryDate');
         $showMapper->add('comments');
     }
-
-    public function getExportFields()
-    {
-        $exportFields = parent::getExportFields();
-        $exportFields[] = 'service.id';
-        $exportFields[] = 'service.name';
-
-        return $exportFields;
-    }
-
 }
