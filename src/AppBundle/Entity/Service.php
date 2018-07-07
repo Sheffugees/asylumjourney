@@ -133,7 +133,7 @@ class Service
     private $nextReviewComments;
 
     /**
-     * @ORM\Column(name="nextReviewComments", type="text", nullable=true)
+     * @ORM\Column(name="externalReviews", type="text", nullable=true)
      * @var string
      */
     private $externalReviews;
