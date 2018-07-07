@@ -78,6 +78,7 @@ class ServiceController extends Controller
      */
     public function createServiceAction(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
         $data = json_decode($request->getContent(), true);
 
         $service = $this->mapDataToService($data);
@@ -107,6 +108,7 @@ class ServiceController extends Controller
      */
     public function editServiceAction(int $id, Request $request): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
         $data = json_decode($request->getContent(), true);
         $service = $this->getDoctrine()->getRepository(Service::class)->find($id);
 
@@ -140,6 +142,7 @@ class ServiceController extends Controller
      */
     public function deleteServiceAction(int $id): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_EDITOR');
         $service = $this->getDoctrine()->getRepository(Service::class)->find($id);
 
         if (!$service) {
