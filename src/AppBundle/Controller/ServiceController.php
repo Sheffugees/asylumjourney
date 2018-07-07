@@ -254,6 +254,10 @@ class ServiceController extends Controller
             ));
         }
 
+        if (isset($data['externalReviews'])) {
+            $service->setExternalReviews($data['externalReviews']);
+        }
+
         return $service;
     }
 
@@ -303,7 +307,8 @@ class ServiceController extends Controller
             'lastReviewComments' => $service->getLastReviewComments(),
             'nextReviewDate' => $service->getISO8601NextReviewDate(),
             'nextReviewComments' => $service->getNextReviewComments(),
-            'resources' => array_map(function(ResourceLink $resource) {return ['name' => $resource->getName(), 'url' => $resource->getUrl(), 'expiryDate' => $resource->getISO8601ExpiryDate(), 'comments' => $resource->getComments()];},$service->getResources()->getValues())
+            'resources' => array_map(function(ResourceLink $resource) {return ['name' => $resource->getName(), 'url' => $resource->getUrl(), 'expiryDate' => $resource->getISO8601ExpiryDate(), 'comments' => $resource->getComments()];},$service->getResources()->getValues()),
+            'externalReviews' => $service->getExternalReviews(),
         ];
     }
 
@@ -380,6 +385,7 @@ class ServiceController extends Controller
             'lastReviewComments' => $provider->getLastReviewComments(),
             'nextReviewDate' => $provider->getISO8601NextReviewDate(),
             'nextReviewComments' => $provider->getNextReviewComments(),
+            'providerContact' => $provider->getProviderContact()
         ];
     }
 }

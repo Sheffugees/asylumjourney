@@ -71,6 +71,7 @@ class ProviderController extends Controller
         $lastReviewComments = isset ($parametersAsArray['lastReviewComments']) ? $parametersAsArray['lastReviewComments'] : null;
         $nextReviewComments = isset ($parametersAsArray['nextReviewComments']) ? $parametersAsArray['nextReviewComments'] : null;
         $nextReviewDate = isset ($parametersAsArray['nextReviewDate']) ? new \DateTime($parametersAsArray['nextReviewDate']) : null;
+        $providerContact = isset ($parametersAsArray['providerContact']) ? $parametersAsArray['providerContact'] : null;
 
         $provider = new Provider();
         $provider->setName($name);
@@ -87,7 +88,8 @@ class ProviderController extends Controller
         $provider->setLastReviewedBy($lastReviewedBy);
         $provider->setLastReviewComments($lastReviewComments);
         $provider->setNextReviewDate($nextReviewDate);
-        $provider->setNextReviewComments($nextReviewComments);
+        $provider->setNextReviewDate($nextReviewDate);
+        $provider->setProviderContact($providerContact);
 
         $errors = $this->get('validator')->validate($provider);
 
@@ -267,6 +269,7 @@ class ProviderController extends Controller
             'lastReviewComments' => $provider->getLastReviewComments(),
             'nextReviewDate' => $provider->getISO8601NextReviewDate(),
             'nextReviewComments' => $provider->getNextReviewComments(),
+            'providerContact' => $provider->getProviderContact(),
         ];
     }
 }

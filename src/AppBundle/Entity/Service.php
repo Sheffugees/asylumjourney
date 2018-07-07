@@ -132,6 +132,12 @@ class Service
      */
     private $nextReviewComments;
 
+    /**
+     * @ORM\Column(name="nextReviewComments", type="text", nullable=true)
+     * @var string
+     */
+    private $externalReviews;
+
     public function __construct()
     {
         $this->stages = new ArrayCollection();
@@ -441,5 +447,14 @@ class Service
         return null;
     }
 
+    public function getExternalReviews()
+    {
+        return $this->externalReviews;
+    }
+
+    public function setExternalReviews($externalReviews)
+    {
+        $this->externalReviews = $externalReviews;
+    }
 }
 
