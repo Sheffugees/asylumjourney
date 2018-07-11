@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -37,9 +38,9 @@ class ResourceLink
     private $expiryDate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Service", inversedBy="resources")
+     * @ORM\ManyToMany(targetEntity="Service", inversedBy="resources")
      */
-    private $service;
+    private $services;
 
     /**
      * @ORM\Column(name="comments", type="text", nullable=true)
@@ -47,14 +48,9 @@ class ResourceLink
      */
     private $comments;
 
-    public function getService()
+    public function __construct()
     {
-        return $this->service;
-    }
-
-    public function setService(?Service $service)
-    {
-        $this->service = $service;
+        $this->services = new ArrayCollection();
     }
 
     public function getId()
@@ -118,5 +114,14 @@ class ResourceLink
         $this->comments = $comments;
     }
 
+    public function getServices()
+    {
+        return $this->services;
+    }
+
+    public function setServices($services)
+    {
+        $this->services = $services;
+    }
 }
 

@@ -23,6 +23,7 @@ class HomeController extends Controller
                 ->addLink('issues', '/issues')
                 ->addLink('categories', '/categories')
                 ->addLink('serviceUsers', '/service-users')
+                ->addLink('resources', '/resources')
         );
     }
 

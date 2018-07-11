@@ -88,7 +88,7 @@ class ProviderController extends Controller
         $provider->setLastReviewedBy($lastReviewedBy);
         $provider->setLastReviewComments($lastReviewComments);
         $provider->setNextReviewDate($nextReviewDate);
-        $provider->setNextReviewDate($nextReviewDate);
+        $provider->setNextReviewComments($nextReviewComments);
         $provider->setProviderContact($providerContact);
 
         $errors = $this->get('validator')->validate($provider);

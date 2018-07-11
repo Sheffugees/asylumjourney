@@ -94,7 +94,7 @@ class Service
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\ResourceLink", mappedBy="service", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\ResourceLink", mappedBy="services", cascade={"all"})
      * @var Collection
      */
     private $resources;
@@ -339,41 +339,12 @@ class Service
 
     public function setResources(Collection $resources)
     {
-        foreach ($this->resources as $existingResource) {
-            $existingResource->setService(null);
-        }
-
-        $this->resources = new ArrayCollection(array_map(
-            function (ResourceLink $resource) {
-                foreach ($this->resources as $existingResource) {
-                    if ($existingResource->getName() == $resource->getName()) {
-                        $existingResource->setUrl($resource->getUrl());
-                        $existingResource->setExpiryDate($resource->getExpiryDate());
-                        $existingResource->setComments($resource->getComments());
-                        $existingResource->setService($this);
-
-                        return $existingResource;
-                    }
-                }
-
-                $resource->setService($this);
-
-                return $resource;
-            },
-            $resources->getValues()
-        ));
+        $this->resources = $resources;
     }
 
-    public function addResource(ResourceLink $newResource)
+    public function addResource(ResourceLink $resource)
     {
-        $newResource->setService($this);
-        foreach ($this->resources as $resource) {
-            if ($resource->getId() == $newResource->getId()) {
-                return;
-            }
-        }
-
-        $this->resources[] = $newResource;
+        $this->resources[] = $resource;
     }
 
     public function removeResource(ResourceLink $resource)
