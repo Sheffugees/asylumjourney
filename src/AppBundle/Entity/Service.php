@@ -339,16 +339,24 @@ class Service
 
     public function setResources(Collection $resources)
     {
-        $this->resources = $resources;
+        foreach($this->resources as $existingResource) {
+            $this->removeResource($existingResource);
+        }
+
+        foreach ($resources as $resource) {
+            $this->addResource($resource);
+        }
     }
 
     public function addResource(ResourceLink $resource)
     {
+        $resource->addService($this);
         $this->resources[] = $resource;
     }
 
     public function removeResource(ResourceLink $resource)
     {
+        $resource->removeService($this);
         $this->resources->removeElement($resource);
     }
 

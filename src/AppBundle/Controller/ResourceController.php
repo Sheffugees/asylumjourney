@@ -56,14 +56,16 @@ class ResourceController extends Controller
         $this->denyAccessUnlessGranted('ROLE_EDITOR');
         $parametersAsArray = $this->parametersFromJson($request);
 
-        $name = isset ($parametersAsArray['name']) ? $parametersAsArray['name'] : null;
-        $url = isset ($parametersAsArray['url']) ? $parametersAsArray['url'] : null;
         $expiryDate = isset ($parametersAsArray['expiryDate']) ? new \DateTime($parametersAsArray['expiryDate']) : null;
         $comments = isset ($parametersAsArray['comments']) ? $parametersAsArray['comments'] : null;
 
         $resource = new ResourceLink();
-        $resource->setName($name);
-        $resource->setUrl($url);
+        if (isset($parametersAsArray['name'])) {
+            $resource->setName($parametersAsArray['name']);
+        }
+        if (isset($parametersAsArray['url'])) {
+            $resource->setUrl($parametersAsArray['url']);
+        }
         $resource->setExpiryDate($expiryDate);
         $resource->setComments($comments);
 

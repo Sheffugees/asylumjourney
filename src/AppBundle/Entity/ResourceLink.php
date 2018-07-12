@@ -118,14 +118,14 @@ class ResourceLink
         $this->comments = $comments;
     }
 
-    public function getServices()
+    public function addService(Service $service)
     {
-        return $this->services;
+        return $this->services[] = $service;
     }
 
-    public function setServices($services)
+    public function removeService(Service $service)
     {
-        $this->services = $services;
+        $this->services->removeElement($service);
     }
 }
 
