@@ -105,7 +105,6 @@ class ResourceController extends Controller
         $expiryDate = isset ($parametersAsArray['expiryDate']) ? new \DateTime($parametersAsArray['expiryDate']) : null;
         $comments = isset ($parametersAsArray['comments']) ? $parametersAsArray['comments'] : null;
 
-        $resource = new ResourceLink();
         $resource->setName($name);
         $resource->setUrl($url);
         $resource->setExpiryDate($expiryDate);
