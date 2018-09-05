@@ -6,7 +6,6 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
-use Sonata\CoreBundle\Form\Type\CollectionType;
 
 class ServiceAdmin extends ShortDateAdmin
 {
@@ -24,20 +23,13 @@ class ServiceAdmin extends ShortDateAdmin
         $formMapper->add('serviceUsers', 'sonata_type_model', ['multiple' => true]);
         $formMapper->add('issues', 'sonata_type_model', ['multiple' => true, 'required' => false]);
         $formMapper->add('resources', 'sonata_type_model', ['multiple' => true, 'required' => false]);
-        $formMapper->add(
-            'resources',
-            CollectionType::class,
-            ['by_reference' => false],
-            [
-                'edit' => 'inline',
-                'inline' => 'table',
-            ]
-        );
+        $formMapper->add('resources', 'sonata_type_model', ['multiple' => true, 'required' => false]);
         $formMapper->add('lastReviewDate', 'date', ['required' => false]);
         $formMapper->add('lastReviewedBy', 'text', ['required' => false]);
         $formMapper->add('lastReviewComments', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
         $formMapper->add('nextReviewDate', 'date', ['required' => false]);
         $formMapper->add('nextReviewComments', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
+        $formMapper->add('externalReviews', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -75,6 +67,7 @@ class ServiceAdmin extends ShortDateAdmin
             ->add('lastReviewedBy')
             ->add('lastReviewComments')
             ->add('nextReviewComments')
-            ->add('nextReviewDate');
+            ->add('nextReviewDate')
+            ->add('externalReviews');
     }
 }

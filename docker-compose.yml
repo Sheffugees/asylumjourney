@@ -5,10 +5,16 @@ web:
         SYMFONY_ENV: dev
         SYMFONY_WEB_APP_ENV_REWRITE: "true"
         APP_ENDPOINT: "/app_dev.php"
+        DATABASE_NAME: journey
+        DATABASE_USER: journey
+        DATABASE_PASSWORD: journey
+        DATABASE_HOST: mysql
+        APPLICATION_ENV: development
+        WEB_HTTP: "true"
     volumes:
         - .:/app
     links:
-        - database
+        - mysql
     expose:
         - 80
         - 443
@@ -16,8 +22,8 @@ web:
         - 8000:80
         - 4430:443
 
-database:
-    image: mysql
+mysql:
+    image: quay.io/continuouspipe/mysql5.7:stable
     environment:
         MYSQL_ROOT_PASSWORD: root
         MYSQL_DATABASE: journey

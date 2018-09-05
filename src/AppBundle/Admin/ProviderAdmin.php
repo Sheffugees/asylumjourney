@@ -26,6 +26,7 @@ class ProviderAdmin extends ShortDateAdmin
         $formMapper->add('lastReviewComments', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
         $formMapper->add('nextReviewDate', 'date', ['required' => false]);
         $formMapper->add('nextReviewComments', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
+        $formMapper->add('providerContact', 'textarea', ['required' => false, 'attr' => ['rows' => 15]]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -53,6 +54,7 @@ class ProviderAdmin extends ShortDateAdmin
             ->add('lastReviewedBy')
             ->add('lastReviewComments')
             ->add('nextReviewComments')
-            ->add('nextReviewDate');
+            ->add('nextReviewDate')
+            ->add('providerContact');
     }
 }

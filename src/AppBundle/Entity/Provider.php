@@ -105,6 +105,12 @@ class Provider
      */
     private $nextReviewComments;
 
+    /**
+     * @ORM\Column(name="providerContact", type="text", nullable=true)
+     * @var string
+     */
+    private $providerContact;
+
     public function setAddress($address)
     {
         $this->address = $address;
@@ -281,5 +287,14 @@ class Provider
         return null;
     }
 
+    public function getProviderContact()
+    {
+        return $this->providerContact;
+    }
+
+    public function setProviderContact($providerContact)
+    {
+        $this->providerContact = $providerContact;
+    }
 }
 

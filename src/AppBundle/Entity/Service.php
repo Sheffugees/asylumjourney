@@ -94,7 +94,7 @@ class Service
     private $events;
 
     /**
-     * @ORM\OneToMany(targetEntity="\AppBundle\Entity\ResourceLink", mappedBy="service", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="\AppBundle\Entity\ResourceLink", mappedBy="services", cascade={"all"})
      * @var Collection
      */
     private $resources;
@@ -131,6 +131,12 @@ class Service
      * @var string
      */
     private $nextReviewComments;
+
+    /**
+     * @ORM\Column(name="externalReviews", type="text", nullable=true)
+     * @var string
+     */
+    private $externalReviews;
 
     public function __construct()
     {
@@ -333,45 +339,24 @@ class Service
 
     public function setResources(Collection $resources)
     {
-        foreach ($this->resources as $existingResource) {
-            $existingResource->setService(null);
+        foreach($this->resources as $existingResource) {
+            $this->removeResource($existingResource);
         }
 
-        $this->resources = new ArrayCollection(array_map(
-            function (ResourceLink $resource) {
-                foreach ($this->resources as $existingResource) {
-                    if ($existingResource->getName() == $resource->getName()) {
-                        $existingResource->setUrl($resource->getUrl());
-                        $existingResource->setExpiryDate($resource->getExpiryDate());
-                        $existingResource->setComments($resource->getComments());
-                        $existingResource->setService($this);
-
-                        return $existingResource;
-                    }
-                }
-
-                $resource->setService($this);
-
-                return $resource;
-            },
-            $resources->getValues()
-        ));
+        foreach ($resources as $resource) {
+            $this->addResource($resource);
+        }
     }
 
-    public function addResource(ResourceLink $newResource)
+    public function addResource(ResourceLink $resource)
     {
-        $newResource->setService($this);
-        foreach ($this->resources as $resource) {
-            if ($resource->getId() == $newResource->getId()) {
-                return;
-            }
-        }
-
-        $this->resources[] = $newResource;
+        $resource->addService($this);
+        $this->resources[] = $resource;
     }
 
     public function removeResource(ResourceLink $resource)
     {
+        $resource->removeService($this);
         $this->resources->removeElement($resource);
     }
 
@@ -441,5 +426,14 @@ class Service
         return null;
     }
 
+    public function getExternalReviews()
+    {
+        return $this->externalReviews;
+    }
+
+    public function setExternalReviews($externalReviews)
+    {
+        $this->externalReviews = $externalReviews;
+    }
 }
 

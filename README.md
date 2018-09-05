@@ -35,26 +35,21 @@ It runs the `AppBundle\Command\FixturesCommand` to set up the test data, so any 
 
 ## Getting Started
 
-Needs composer for package management, see installation instructions at https://getcomposer.org/doc/00-intro.md
-
-There is no developer environment (e.g. Vagrant) at the moment, requires PHP 5.6+ and Mysql. There's half-hearted `Dockerfile` which sort-of works to get the right PHP version - but you're on your own for the database.
-
-```sh
-docker build -t asylumjourney .
-docker run -it -p 8000:8000 -v $(pwd):/srv/asylumjourney asylumjourney
-```
-
-The Mysql username, password and database can be set in the `app/config/parameters.yml` file
-(this file is not kept in version control so local parameters can be
- safely added to it)
+There is a docker based local develop environment. This can be started with:
 
 ```
-git clone https://github.com/Sheffugees/asylumjourney
+docker-compose up
+```
 
-php composer.phar install
+An admin user for the admin panel can be created with:
 
-php app/console doctrine:schema:create
+```
+docker-compose exec web /bin/bash
+```
 
+to get a bash session on the web container and that using that to run:
+
+```
 php app/console fos:user:create --super-admin
 ```
 
@@ -74,33 +69,11 @@ If you set a passphrase then this need to be updates in `app/config/parameters.y
     jwt_key_pass_phrase: "the pass phrase"
 ```
 
-## Running locally
-
-```
-php app/console server:run
-```
-
 Admin section can be found at `/admin`, log in with the details provided when running `fos:user:create`
-
-## Trello Import
-
-Data can be imported from the Trello CSV export. This is intended for switching over from using Trello
-to enter data to using the admin panel rather than as an ongoing process. **The import deletes the existing
-data.**
-
-The CSV export needs to be in the root directory, named `trello.csv` and have the header line removed.
-Then run:
-
-```
-php app/console app:csv-import
-```
 
 ## Heroku
 
 Deploying code to Heroku can be done by pushing to the relevant git repo.
-The one of job of importing data from Trello is probably best done by doing it locally
-and using mysqldump and importing that on Heroku. **This will also replace any user for the admin
-section with the local ones**
 
 ## Task list
 

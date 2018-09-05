@@ -230,28 +230,11 @@ class ServiceController extends Controller
         }
 
         if (isset($data['resources']) && is_array($data['resources'])) {
-            $service->setResources(new ArrayCollection(
-                array_map(
-                    function (array $resource) {
-                        $resourceLink = (new ResourceLink())
-                            ->setName($resource['name'])
-                            ->setUrl($resource['url']);
-                        if (isset($resource['expiryDate'])) {
-                            $resourceLink->setExpiryDate(new DateTime($resource['expiryDate']));
-                        }
-                        if (isset($resource['comments'])) {
-                            $resourceLink->setComments($resource['comments']);
-                        }
-                        return $resourceLink;
-                    },
-                    array_filter(
-                        $data['resources'],
-                        function (array $resource) {
-                            return isset($resource['name']) && isset($resource['url']);
-                        }
-                    )
-                )
-            ));
+            $service->setResources($this->mapEntityCollectionFromIds($data['resources'], ResourceLink::class));
+        }
+
+        if (isset($data['externalReviews'])) {
+            $service->setExternalReviews($data['externalReviews']);
         }
 
         return $service;
@@ -303,7 +286,7 @@ class ServiceController extends Controller
             'lastReviewComments' => $service->getLastReviewComments(),
             'nextReviewDate' => $service->getISO8601NextReviewDate(),
             'nextReviewComments' => $service->getNextReviewComments(),
-            'resources' => array_map(function(ResourceLink $resource) {return ['name' => $resource->getName(), 'url' => $resource->getUrl(), 'expiryDate' => $resource->getISO8601ExpiryDate(), 'comments' => $resource->getComments()];},$service->getResources()->getValues())
+            'externalReviews' => $service->getExternalReviews(),
         ];
     }
 
@@ -353,6 +336,13 @@ class ServiceController extends Controller
             );
         }
 
+        foreach ($service->getResources() as $resource) {
+            $hal->addResource(
+                'resources',
+                (new Hal('/resources/' . $resource->getId()))->setData($this->getResourceData($resource))
+            );
+        }
+
         return $hal;
     }
 
@@ -380,6 +370,18 @@ class ServiceController extends Controller
             'lastReviewComments' => $provider->getLastReviewComments(),
             'nextReviewDate' => $provider->getISO8601NextReviewDate(),
             'nextReviewComments' => $provider->getNextReviewComments(),
+            'providerContact' => $provider->getProviderContact()
+        ];
+    }
+
+    private function getResourceData(ResourceLink $resource)
+    {
+        return [
+            'id' => $resource->getId(),
+            'name' => $resource->getName(),
+            'url' => $resource->getUrl(),
+            'expiryDate' => $resource->getISO8601ExpiryDate(),
+            'comments' => $resource->getComments(),
         ];
     }
 }
